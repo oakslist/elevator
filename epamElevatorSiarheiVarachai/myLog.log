@@ -1,0 +1,193 @@
+2014-04-21 17:04:37 INFO  Runner:24 - START_APPLICATION
+2014-04-21 17:04:37 INFO  Runner:27 - ==================================
+2014-04-21 17:04:37 INFO  ConfigFileImpl:25 - READ_CONFIG_PROPERTY
+2014-04-21 17:04:37 INFO  ConfigFileImpl:28 - IMPLEMENT_THE_CONFIG_FILE
+2014-04-21 17:04:37 INFO  ConfigFile:24 - storiesNumber = 5
+2014-04-21 17:04:37 INFO  ConfigFile:26 - elevatorCapasity = 5
+2014-04-21 17:04:37 INFO  ConfigFile:28 - passengersNumber = 15
+2014-04-21 17:04:37 INFO  ConfigFile:30 - animationBoost = 1
+2014-04-21 17:04:39 INFO  Building:16 - ==================================
+2014-04-21 17:04:39 INFO  Building:17 - CREATED_BUILDING
+2014-04-21 17:04:39 INFO  Building:18 - ==================================
+2014-04-21 17:04:39 INFO  Runner:100 - CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDMEspq-1; destinationStory=4; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDAHsob-2; destinationStory=5; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDlhDTW-3; destinationStory=3; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDdYdhe-4; destinationStory=3; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDgIIRn-5; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDfofEl-6; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=ID0Cu7I-7; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDHJcz5-8; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDhxuQE-9; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDt2Kzc-10; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDHJi24-11; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDxTaXY-12; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDikyBR-13; destinationStory=3; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDwTeht-14; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDtkCRK-15; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:04:39 INFO  Runner:56 - ==================================
+2014-04-21 17:04:39 INFO  Runner:57 - STARTING_TRANSPORTATION
+2014-04-21 17:04:39 INFO  Runner:58 - ==================================
+2014-04-21 17:04:39 INFO  Runner:61 - CREATE_PASSENGER_TRANSPORTATION_TASKS
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDMEspq-1
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDAHsob-2
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDlhDTW-3
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDdYdhe-4
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDgIIRn-5
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDfofEl-6
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadID0Cu7I-7
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDHJcz5-8
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDhxuQE-9
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDt2Kzc-10
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDHJi24-11
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDxTaXY-12
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDikyBR-13
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDwTeht-14
+2014-04-21 17:04:39 INFO  TransportationTask:22 - created passenger threadIDtkCRK-15
+2014-04-21 17:04:39 INFO  Runner:76 - ==================================
+2014-04-21 17:04:39 INFO  Runner:78 - ELEVATOR_STARTING
+2014-04-21 17:04:40 INFO  Controller:140 - BOADING_OF_PASSENGER (IDMEspq-1 on 1)
+2014-04-21 17:04:40 INFO  Controller:140 - BOADING_OF_PASSENGER (IDAHsob-2 on 1)
+2014-04-21 17:04:40 INFO  Controller:140 - BOADING_OF_PASSENGER (IDlhDTW-3 on 1)
+2014-04-21 17:04:41 INFO  Controller:301 - MOVING_ELEVATOR (from 1 to 2)
+2014-04-21 17:04:43 INFO  Controller:221 - ==================================
+2014-04-21 17:04:43 INFO  Controller:222 - ABORTED
+2014-04-21 17:04:43 INFO  Controller:223 - ==================================
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDdYdhe-4 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDdYdhe-4; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDgIIRn-5 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDgIIRn-5; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDfofEl-6 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDfofEl-6; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = ID0Cu7I-7 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDHJcz5-8 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = ID0Cu7I-7; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDhxuQE-9 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDHJcz5-8; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDhxuQE-9; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDt2Kzc-10 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDt2Kzc-10; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDHJi24-11 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDHJi24-11; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDxTaXY-12 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDxTaXY-12; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDikyBR-13 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDikyBR-13; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDwTeht-14 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDwTeht-14; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:233 - passengerID = IDtkCRK-15 in dispatchStoryContainer now
+2014-04-21 17:04:43 INFO  Controller:252 - passengerID = IDMEspq-1 in elevatorContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDtkCRK-15; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDMEspq-1; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:252 - passengerID = IDAHsob-2 in elevatorContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDAHsob-2; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Controller:252 - passengerID = IDlhDTW-3 in elevatorContainer now
+2014-04-21 17:04:43 INFO  TransportationTask:79 - passengerId = IDlhDTW-3; transportationState = ABORTED
+2014-04-21 17:04:43 INFO  Runner:83 - ==================================
+2014-04-21 17:04:43 INFO  Runner:84 - COMPLETION_TRANSPORTATION
+2014-04-21 17:04:43 INFO  Runner:85 - ==================================
+2014-04-21 17:04:43 INFO  Runner:94 - FINISH_APPLICATION
+2014-04-21 17:07:22 INFO  Runner:24 - START_APPLICATION
+2014-04-21 17:07:22 INFO  Runner:27 - ==================================
+2014-04-21 17:07:22 INFO  ConfigFileImpl:25 - READ_CONFIG_PROPERTY
+2014-04-21 17:07:22 INFO  ConfigFileImpl:28 - IMPLEMENT_THE_CONFIG_FILE
+2014-04-21 17:07:22 INFO  ConfigFile:24 - storiesNumber = 5
+2014-04-21 17:07:22 INFO  ConfigFile:26 - elevatorCapasity = 5
+2014-04-21 17:07:22 INFO  ConfigFile:28 - passengersNumber = 15
+2014-04-21 17:07:22 INFO  ConfigFile:30 - animationBoost = 1
+2014-04-21 17:07:24 INFO  Building:16 - ==================================
+2014-04-21 17:07:24 INFO  Building:17 - CREATED_BUILDING
+2014-04-21 17:07:24 INFO  Building:18 - ==================================
+2014-04-21 17:07:24 INFO  Runner:100 - CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDe8QSW-1; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDkMJOo-2; destinationStory=3; transportationState=NOT_STARTED
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDa4SbK-3; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDEJ2EJ-4; destinationStory=3; transportationState=NOT_STARTED
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDiM4YM-5; destinationStory=3; transportationState=NOT_STARTED
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDqalFJ-6; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:07:24 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDRflu8-7; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDtnYfE-8; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDLqmrM-9; destinationStory=4; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDspCvy-10; destinationStory=5; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDHuaNn-11; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDboGjR-12; destinationStory=5; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDtTm0r-13; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDWSahG-14; destinationStory=1; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Passenger:22 - CREATED_NEW_PASSENGER: passengerId=IDYV7GD-15; destinationStory=2; transportationState=NOT_STARTED
+2014-04-21 17:07:25 INFO  Runner:56 - ==================================
+2014-04-21 17:07:25 INFO  Runner:57 - STARTING_TRANSPORTATION
+2014-04-21 17:07:25 INFO  Runner:58 - ==================================
+2014-04-21 17:07:25 INFO  Runner:61 - CREATE_PASSENGER_TRANSPORTATION_TASKS
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDe8QSW-1
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDkMJOo-2
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDa4SbK-3
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDEJ2EJ-4
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDiM4YM-5
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDqalFJ-6
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDRflu8-7
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDtnYfE-8
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDLqmrM-9
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDspCvy-10
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDHuaNn-11
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDboGjR-12
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDtTm0r-13
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDWSahG-14
+2014-04-21 17:07:25 INFO  TransportationTask:22 - created passenger threadIDYV7GD-15
+2014-04-21 17:07:25 INFO  Runner:76 - ==================================
+2014-04-21 17:07:25 INFO  Runner:78 - ELEVATOR_STARTING
+2014-04-21 17:07:26 INFO  Controller:140 - BOADING_OF_PASSENGER (IDe8QSW-1 on 1)
+2014-04-21 17:07:26 INFO  Controller:140 - BOADING_OF_PASSENGER (IDkMJOo-2 on 1)
+2014-04-21 17:07:26 INFO  Controller:140 - BOADING_OF_PASSENGER (IDa4SbK-3 on 1)
+2014-04-21 17:07:27 INFO  Controller:301 - MOVING_ELEVATOR (from 1 to 2)
+2014-04-21 17:07:28 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDe8QSW-1 on 2)
+2014-04-21 17:07:28 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDa4SbK-3 on 2)
+2014-04-21 17:07:28 INFO  Controller:140 - BOADING_OF_PASSENGER (IDEJ2EJ-4 on 2)
+2014-04-21 17:07:28 INFO  Controller:140 - BOADING_OF_PASSENGER (IDiM4YM-5 on 2)
+2014-04-21 17:07:29 INFO  Controller:301 - MOVING_ELEVATOR (from 2 to 3)
+2014-04-21 17:07:30 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDkMJOo-2 on 3)
+2014-04-21 17:07:30 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDEJ2EJ-4 on 3)
+2014-04-21 17:07:30 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDiM4YM-5 on 3)
+2014-04-21 17:07:30 INFO  Controller:140 - BOADING_OF_PASSENGER (IDLqmrM-9 on 3)
+2014-04-21 17:07:31 INFO  Controller:301 - MOVING_ELEVATOR (from 3 to 4)
+2014-04-21 17:07:32 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDLqmrM-9 on 4)
+2014-04-21 17:07:32 INFO  Controller:140 - BOADING_OF_PASSENGER (IDspCvy-10 on 4)
+2014-04-21 17:07:32 INFO  Controller:140 - BOADING_OF_PASSENGER (IDboGjR-12 on 4)
+2014-04-21 17:07:33 INFO  Controller:301 - MOVING_ELEVATOR (from 4 to 5)
+2014-04-21 17:07:34 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDspCvy-10 on 5)
+2014-04-21 17:07:34 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDboGjR-12 on 5)
+2014-04-21 17:07:35 INFO  Controller:140 - BOADING_OF_PASSENGER (IDtTm0r-13 on 5)
+2014-04-21 17:07:35 INFO  Controller:140 - BOADING_OF_PASSENGER (IDWSahG-14 on 5)
+2014-04-21 17:07:35 INFO  Controller:140 - BOADING_OF_PASSENGER (IDYV7GD-15 on 5)
+2014-04-21 17:07:35 INFO  Controller:301 - MOVING_ELEVATOR (from 5 to 4)
+2014-04-21 17:07:37 INFO  Controller:140 - BOADING_OF_PASSENGER (IDHuaNn-11 on 4)
+2014-04-21 17:07:37 INFO  Controller:301 - MOVING_ELEVATOR (from 4 to 3)
+2014-04-21 17:07:39 INFO  Controller:140 - BOADING_OF_PASSENGER (IDRflu8-7 on 3)
+2014-04-21 17:07:39 INFO  Controller:301 - MOVING_ELEVATOR (from 3 to 2)
+2014-04-21 17:07:40 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDYV7GD-15 on 2)
+2014-04-21 17:07:40 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDHuaNn-11 on 2)
+2014-04-21 17:07:41 INFO  Controller:140 - BOADING_OF_PASSENGER (IDqalFJ-6 on 2)
+2014-04-21 17:07:42 INFO  Controller:301 - MOVING_ELEVATOR (from 2 to 1)
+2014-04-21 17:07:42 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDtTm0r-13 on 1)
+2014-04-21 17:07:42 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDWSahG-14 on 1)
+2014-04-21 17:07:42 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDRflu8-7 on 1)
+2014-04-21 17:07:42 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDqalFJ-6 on 1)
+2014-04-21 17:07:44 INFO  Controller:301 - MOVING_ELEVATOR (from 1 to 2)
+2014-04-21 17:07:46 INFO  Controller:301 - MOVING_ELEVATOR (from 2 to 3)
+2014-04-21 17:07:48 INFO  Controller:301 - MOVING_ELEVATOR (from 3 to 4)
+2014-04-21 17:07:50 INFO  Controller:301 - MOVING_ELEVATOR (from 4 to 5)
+2014-04-21 17:07:52 INFO  Controller:301 - MOVING_ELEVATOR (from 5 to 4)
+2014-04-21 17:07:54 INFO  Controller:301 - MOVING_ELEVATOR (from 4 to 3)
+2014-04-21 17:07:56 INFO  Controller:140 - BOADING_OF_PASSENGER (IDtnYfE-8 on 3)
+2014-04-21 17:07:56 INFO  Controller:301 - MOVING_ELEVATOR (from 3 to 2)
+2014-04-21 17:07:57 INFO  Controller:180 - DEBOADING_OF_PASSENGER (IDtnYfE-8 on 2)
+2014-04-21 17:07:59 INFO  Runner:83 - ==================================
+2014-04-21 17:07:59 INFO  Runner:84 - COMPLETION_TRANSPORTATION
+2014-04-21 17:07:59 INFO  Runner:85 - ==================================
+2014-04-21 17:07:59 INFO  Controller:345 - VALIDATION
+2014-04-21 17:07:59 INFO  Controller:354 - dispatch stories are empty. VALIDATION - OK
+2014-04-21 17:07:59 ERROR Controller:365 - elevator is empty. VALIDATION - OK
+2014-04-21 17:07:59 ERROR Controller:401 - all passengers have transportationState.COMPLETED. VALIDATION - OK
+2014-04-21 17:07:59 ERROR Controller:405 - all passengers got correct destination. VALIDATION - OK
+2014-04-21 17:07:59 ERROR Controller:411 - arrival stories are equal passengersNumber. VALIDATION - OK
+2014-04-21 17:07:59 INFO  Runner:90 - ==================================
+2014-04-21 17:07:59 INFO  Runner:94 - FINISH_APPLICATION
