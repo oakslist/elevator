@@ -3,6 +3,7 @@ package by.epam.model.core;
 import org.apache.log4j.Logger;
 
 import by.epam.LogConstants;
+import by.epam.applications.ElevatorApp;
 import by.epam.logs.MyLogWriter;
 import by.epam.model.beans.Passenger;
 import by.epam.model.beans.TransportationState;
@@ -35,12 +36,14 @@ public class TransportationTask implements Runnable {
 				while ((!Controller.readyToLetIn 
 						|| (Controller.isPassengerGoingToUp(passenger) 
 								!= Controller.upwardMovement)) 
-						&& Controller.isAborted() == false) {
-					if (Controller.isAborted() == false) {
+						&& Controller.isAborted() == false && ElevatorApp.isWorking() == true) {
+					if (Controller.isAborted() == false && ElevatorApp.isWorking() == true) {
+						// waiting to set in Elevator
 						this.passenger.wait();
+						System.out.println("2222222222222222222222222222222222222");
 						if (Controller.isPassengerGoingToUp(passenger) 
 								!= Controller.upwardMovement) {
-							passenger.notify();
+							passenger.notifyAll();
 						}
 					} else {
 						this.wasAborted = true;
@@ -54,10 +57,13 @@ public class TransportationTask implements Runnable {
 				while ((!Controller.readyToLetOut 
 						|| (passenger.getDestinationStory() 
 								!= Controller.currentStory)) 
-						&& Controller.isAborted() == false) {
-					passenger.notify();
+						&& Controller.isAborted() == false && ElevatorApp.isWorking() == false) {
+					passenger.notifyAll();
 					if (Controller.isAborted() == false) {
+						// waiting to go out from Elevator
+						System.out.println("33333333333333333333");
 						this.passenger.wait();
+						System.out.println("44444444444444444444444");
 					} else {
 						this.wasAborted = true;
 					}
@@ -69,6 +75,7 @@ public class TransportationTask implements Runnable {
 				}
 				passenger.notify();
 				if (Controller.isAborted() == false) {
+					// waiting all finished processes
 					this.passenger.wait();
 				} 				
 			} catch (InterruptedException e) {

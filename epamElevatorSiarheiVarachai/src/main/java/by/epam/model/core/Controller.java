@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import by.epam.LogConstants;
 import by.epam.ProgramConstants;
 import by.epam.applications.AppButtonListener;
+import by.epam.applications.ElevatorApp;
 import by.epam.logs.MyLogWriter;
 import by.epam.model.beans.Passenger;
 import by.epam.model.beans.TransportationState;
@@ -30,6 +31,7 @@ public class Controller {
 	private boolean readyToExit;	 		//ready to close moving 
 	
 	private static int circleMoving = 0;  // just to show how many circles elevator done in app
+	public static boolean isAppTurn = true;
 	
 	public Controller(MyBuilding building) {
 		this.building = building;
@@ -44,7 +46,7 @@ public class Controller {
 		
 	// start elevator
 	public void move() {
-		Controller.circleMoving += 1;
+		Controller.circleMoving++;
 		while(!this.readyToExit) {
 			if (isAborted) {
 				break;
@@ -62,7 +64,7 @@ public class Controller {
 				try {
 					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME
 							+ ProgramConstants.SLEEP_TIME_ANIMATION_BOOTS
-							* ProgramConstants.ANIMATION_BOOST);
+							* ProgramConstants.animationBootsValue);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -79,7 +81,7 @@ public class Controller {
 				try {
 					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME
 							+ ProgramConstants.SLEEP_TIME_ANIMATION_BOOTS
-							* ProgramConstants.ANIMATION_BOOST);
+							* ProgramConstants.animationBootsValue);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -97,7 +99,7 @@ public class Controller {
 				try {
 					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME
 							+ ProgramConstants.SLEEP_TIME_ANIMATION_BOOTS
-							* ProgramConstants.ANIMATION_BOOST);
+							* ProgramConstants.animationBootsValue);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -129,13 +131,23 @@ public class Controller {
 					break;
 				}
 				synchronized (passenger) {
-					passenger.notify();
-					try {
+//					passenger.notify();
+//					try {
+//						if (isAborted == false) {
+//							passenger.wait();
+//						}
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+					while (ElevatorApp.isWorking() == true) {
+						passenger.notifyAll();
 						if (isAborted == false) {
-							passenger.wait();
+							try {
+								passenger.wait();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
 					}
 				}
 				if (Controller.readyToSetInContainer && !isAborted) {
@@ -169,13 +181,15 @@ public class Controller {
 					.getElevatorContainer().getPassengers()) {
 				currentNumberCheckedPeoplesInElevator--;
 				synchronized (passenger) {
-					passenger.notify();
-					try {
+					while (ElevatorApp.isWorking() == true) {
+						passenger.notifyAll();
 						if (isAborted == false) {
-							passenger.wait();
+							try {
+								passenger.wait();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
 					}
 				}
 				if (Controller.readyToSetInContainer && !isAborted) {

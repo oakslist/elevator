@@ -148,7 +148,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		
 		// elevator case
 		if (elevatorCanMove == false) {
-			appElevator.setY(appElevator.getY() - AppConstants.APP_MULTIPLIER_BOOTS);
+			appElevator.setY(appElevator.getY() - 1 * AppConstants.APP_MULTIPLIER_BOOTS);
 //			if (appElevator.getY() % storyImg.getHeight() == 0) {
 //				appElevatorMovePointer.setY(appElevatorMovePointer.getY() - storyImg.getHeight());
 //			}
@@ -156,23 +156,70 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		
 		// passengers case
 		// first initialization passengers. 
-		// All Threads are waiting correct position on the screen
-		// checked method isOnPosition();
-		// just show moving our characters to the stories on the screen and + 1 stories - to show that building continue 
 		if (building != null && firstInitialization == false) {
-			for (PassengerAppCoordinates appPassenger : appPassengers) {
-				if (appPassenger.getCurrentStory() <= AppConstants.APP_STORIES_ON_SCREEN + 1)
-				synchronized (appPassenger.getPassenger()) {
-					appPassenger.setX(appPassenger.getX() - (int) (Math.random() * 3) - AppConstants.APP_MULTIPLIER_BOOTS);
-					
-				}
-			}
-			firstInitialization = true;
+			createFirstInitialization();
 		}
 		
 
 	
 		repaint();
+	}
+	
+	private void createFirstInitialization() {
+		// All Threads are waiting correct position on the screen
+		// checked method isOnPosition();
+		// just show moving our characters to the stories on the screen and + 1 stories - to show that building continue
+		ElevatorApp.setWorking(true);
+		for (PassengerAppCoordinates appPassenger : appPassengers) {
+			if (appPassenger.isOnPosition() == false) {
+				switch (appPassenger.getCurrentStep()) {
+				case AppConstants.APP_INITIALIZE_STEP_ONE:
+					// moving passengers to building X coordinate to left
+					appPassenger.setX(appPassenger.getX() - (int) (Math.random() * (3 + AppConstants.APP_MULTIPLIER_BOOTS)) - AppConstants.APP_MULTIPLIER_BOOTS);
+					if (appPassenger.isOnPosition() == false && appPassenger.getX() <= AppConstants.APP_PRESENTATION_AREA_WIDTH - passengerImg.getWidth() - 160) {
+						appPassenger.incCurrentStep();
+					}
+					break;
+				case AppConstants.APP_INITIALIZE_STEP_TWO:
+					// moving passengers up. Y to up
+					appPassenger.setY(appPassenger.getY() - (int) (Math.random() * AppConstants.APP_MULTIPLIER_BOOTS) - AppConstants.APP_MULTIPLIER_BOOTS);
+					if (appPassenger.isOnPosition() == false) {
+						if (appPassenger.getCurrentStory() <= AppConstants.APP_STORIES_ON_SCREEN && appPassenger.getY() <= storyImg.getHeight() * appPassenger.getCurrentStory() - AppConstants.BASEMENT_Y_LINE_FOR_PASSENGER_ON_FLOOR) {
+							appPassenger.incCurrentStep();
+						}
+						// kill unnecessary passengers in moving top
+						if (appPassenger.getCurrentStory() > AppConstants.APP_STORIES_ON_SCREEN && appPassenger.getY() < 0 - passengerImg.getHeight()) {
+							appPassenger.setOnPosition(true);
+						}
+					}
+					break;
+				case AppConstants.APP_INITIALIZE_STEP_THREE:
+					// moving into room
+					appPassenger.setX(appPassenger.getX() - (int) (Math.random() * (3 + AppConstants.APP_MULTIPLIER_BOOTS)) - AppConstants.APP_MULTIPLIER_BOOTS);
+					if (appPassenger.getX() <= (storyImg.getWidth() - (passengerImg.getWidth() * 2))) {
+						appPassenger.incCurrentStep();
+						appPassenger.setOnPosition(true);
+					}
+				}
+			}
+		}
+
+		int numberOnPosition = 0;
+		for (PassengerAppCoordinates appPassenger : appPassengers) {
+			if (appPassenger.isOnPosition() == true) {
+				numberOnPosition++;
+			}
+		}
+		if (appPassengers.size() == numberOnPosition) {
+			ElevatorApp.setWorking(false);
+			firstInitialization = true;
+			for (PassengerAppCoordinates appPassenger : appPassengers) {
+				synchronized (appPassenger.getPassenger()) {
+					appPassenger.getPassenger().notifyAll();
+				}
+			}
+		}
+
 	}
 	
 	public void createInstancesInPresentationArea() {

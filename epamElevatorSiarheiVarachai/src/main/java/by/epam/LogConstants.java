@@ -15,7 +15,7 @@ public class LogConstants {
 	public final static String CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS = "CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS";
 	public final static String CREATE_NEW_PASSENGER = "CREATED_NEW_PASSENGER";
 	public final static String CREATE_PASSENGER_TRANSPORTATION_TASKS = "CREATE_PASSENGER_TRANSPORTATION_TASKS";
-	public final static String CREATE_PASSENGER_THREAD = "created passenger thread";
+	public final static String CREATE_PASSENGER_THREAD = "created passenger thread ";
 	public final static String ELEVATOR_STARTING = "ELEVATOR_STARTING";
 
 	public final static String STARTING_TRANSPORTATION_SYSTEM = SEPARATING_LINE

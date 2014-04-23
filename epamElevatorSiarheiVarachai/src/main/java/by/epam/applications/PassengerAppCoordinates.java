@@ -1,5 +1,6 @@
 package by.epam.applications;
 
+import by.epam.AppConstants;
 import by.epam.model.beans.Passenger;
 
 public class PassengerAppCoordinates extends InstanceAppCoordinates {
@@ -7,12 +8,14 @@ public class PassengerAppCoordinates extends InstanceAppCoordinates {
 	private Passenger passenger;
 	private int currentStory;
 	private boolean onPosition;
+	private int currentStep;
 	
 	public PassengerAppCoordinates(Passenger passenger,int currentStory , int xCoordinate, int yCoordinate) {
 		super(xCoordinate, yCoordinate);
 		this.passenger = passenger;
 		this.currentStory = currentStory;
 		this.onPosition = false;
+		this.currentStep = AppConstants.APP_INITIALIZE_STEP_ONE;
 	}
 	
 	public PassengerAppCoordinates(Passenger passenger, int currentStory) {
@@ -33,6 +36,14 @@ public class PassengerAppCoordinates extends InstanceAppCoordinates {
 
 	public void setOnPosition(boolean onPosition) {
 		this.onPosition = onPosition;
+	}
+
+	public int getCurrentStep() {
+		return currentStep;
+	}
+
+	public void incCurrentStep() {
+		this.currentStep++;
 	}
 	
 }
