@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import by.epam.LogConstants;
 import by.epam.ProgramConstants;
 import by.epam.logs.MyLogWriter;
-import by.epam.model.beans.ConfigFile;
+import by.epam.model.core.ConfigFile;
 
 
 public class ConfigFileImpl {

@@ -1,7 +1,7 @@
 package by.epam.applications;
 
 import by.epam.AppConstants;
-import by.epam.model.beans.Controller;
+import by.epam.model.core.Controller;
 
 public class AppButtonListener {
 
@@ -27,11 +27,12 @@ public class AppButtonListener {
 	}
 
 	public void setAbortButtonClicked(boolean abortButtonClicked) {
+		ElevatorApp.stopApp();
 		Controller.setAborted(abortButtonClicked);
 	}
 	
 	public static void setButtonViewLogName() {
-		MainFrame.setButtonText(AppConstants.APP_BUTTON_VIEW_LOG_NAME);
+		ElevatorApp.setButtonText(AppConstants.APP_BUTTON_VIEW_LOG_NAME);
 	}
 	
 }

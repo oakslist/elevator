@@ -6,12 +6,12 @@ import by.epam.LogConstants;
 import by.epam.ProgramConstants;
 import by.epam.applications.ElevatorApp;
 import by.epam.logs.MyLogWriter;
-import by.epam.model.beans.ConfigFile;
-import by.epam.model.beans.Controller;
-import by.epam.model.beans.MyBuilding;
 import by.epam.model.beans.Passenger;
-import by.epam.model.beans.TransportationTask;
 import by.epam.model.containers.DispatchStoryContainer;
+import by.epam.model.core.ConfigFile;
+import by.epam.model.core.Controller;
+import by.epam.model.core.MyBuilding;
+import by.epam.model.core.TransportationTask;
 import by.epam.model.impl.ConfigFileImpl;
 
 
@@ -35,7 +35,7 @@ public class Runner {
 			MyLogWriter.ANIMATION_BOOTS = configFile.getAnimationBoost();
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					new ElevatorApp();
+					ElevatorApp.startElevatorAppFrame();
 				}
 			});
 			ProgramConstants.appButtonListener.startButtonlistener(false);
@@ -45,6 +45,12 @@ public class Runner {
 				configFile.getElevatorCapacity(), configFile.getPassengersNumber());
 
 		setPassengersOnStories(building);
+		
+		//start app and set all input data about passengers
+		if (configFile.getAnimationBoost() != 0) {
+			ElevatorApp.setInitialDataToApp(building);
+			ElevatorApp.startApp();
+		}
 		
 		int story = 0;
 		for (DispatchStoryContainer dsc : building.getDispatchStoriesContainer()) {

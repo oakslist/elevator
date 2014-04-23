@@ -1,6 +1,6 @@
 package by.epam.logs;
-import by.epam.applications.MessagesPanel;
-import by.epam.model.beans.ConfigFile;
+import by.epam.applications.AppMessagesPanel;
+import by.epam.model.core.ConfigFile;
 
 /**
  * write log messages into console and application
@@ -16,7 +16,7 @@ public class MyLogWriter {
 	public static void writeLog(String log) {
 		System.out.println(log);
 		if (MyLogWriter.ANIMATION_BOOTS != 0) {
-			MessagesPanel.setAppLog(log);
+			AppMessagesPanel.setAppLog(log);
 		}
 	}
 	
