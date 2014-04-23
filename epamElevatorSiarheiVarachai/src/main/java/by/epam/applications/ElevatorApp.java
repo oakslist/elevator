@@ -22,7 +22,7 @@ public class ElevatorApp extends JFrame {
 	private final static AppPresentationPanel PRESENTATION_AREA = new AppPresentationPanel();
 	private final static AppMessagesPanel MESSAGE_AREA = new AppMessagesPanel();
 	private static JButton button = new JButton(AppConstants.APP_BUTTON_START_NAME);
-	private static Timer timer = new Timer(30, PRESENTATION_AREA);
+	private static Timer timer = new Timer(60, PRESENTATION_AREA);
 	
 	public ElevatorApp(String title) {
 		super(title);
@@ -89,7 +89,7 @@ public class ElevatorApp extends JFrame {
 	
 	public static void setInitialDataToApp(MyBuilding building) {
 		ElevatorApp.PRESENTATION_AREA.setBuilding(building);
-		ElevatorApp.PRESENTATION_AREA.createPassengersInApp();
+		ElevatorApp.PRESENTATION_AREA.createInstancesInPresentationArea();
 	}
 
 }

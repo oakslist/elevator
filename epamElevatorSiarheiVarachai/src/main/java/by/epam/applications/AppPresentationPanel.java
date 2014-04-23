@@ -19,6 +19,7 @@ import by.epam.AppConstants;
 import by.epam.ProgramConstants;
 import by.epam.model.beans.Passenger;
 import by.epam.model.containers.DispatchStoryContainer;
+import by.epam.model.core.Controller;
 import by.epam.model.core.MyBuilding;
 
 public class AppPresentationPanel extends JComponent implements ActionListener {
@@ -31,8 +32,9 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	private BufferedImage elevatorImg;
 //	private BufferedImage elevatorDoorsClosedImg;
 //	private BufferedImage elevatorAlmostDoorsClosedImg;
-//	private BufferedImage elevatorDownImg;
+	private BufferedImage elevatorDownImg;
 	private BufferedImage elevatorUpImg;
+	private BufferedImage elevatorNoneImg;
 	private BufferedImage storyImg;
 	private BufferedImage passengerImg;
 	
@@ -40,11 +42,13 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	private MyBuilding building;
 	
 	private List<PassengerAppCoordinates> appPassengers = new ArrayList<PassengerAppCoordinates>();
-	private InstanceAppCoordinates appElevator = new InstanceAppCoordinates();
-	private InstanceAppCoordinates appElevatorMovePointer = new InstanceAppCoordinates();
+	private InstanceAppCoordinates appElevator;
+//	private InstanceAppCoordinates appElevatorMovePointer;
 	
 	private int firstFloorY;
-	private int storiesNumberOnFrame = 5;
+	// permission to the elevator to start moving
+	private boolean elevatorCanMove = false;
+	private boolean firstInitialization = false;
 	
 	public AppPresentationPanel() {
 		Dimension size = getPreferredSize();
@@ -58,15 +62,18 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 //					"elevator_doors_closed.png"));
 //			elevatorAlmostDoorsClosedImg = ImageIO.read(new File(imagePath + 
 //					"evelator_doors_almost_closed.png"));
-//			elevatorDownImg = ImageIO.read(new File(imagePath + "elevator_down.png"));
+			elevatorDownImg = ImageIO.read(new File(imagePath + "elevator_down.png"));
 			elevatorUpImg = ImageIO.read(new File(imagePath + "elevator_up.png"));
+			elevatorNoneImg = ImageIO.read(new File(imagePath + "elevator_none.png"));
 			storyImg = ImageIO.read(new File(imagePath + "story.png"));
 			passengerImg = ImageIO.read(new File(imagePath + "passenger.png"));
 			
-			firstFloorY = AppConstants.BASEMENT_FOR_PAINT_STORIES - storyImg.getHeight();
+			firstFloorY = AppConstants.GROUND_LINE - storyImg.getHeight();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		appElevator = new InstanceAppCoordinates((int) (storyImg.getWidth() - elevatorImg.getWidth()) / 2, firstFloorY);
+//		appElevatorMovePointer = new InstanceAppCoordinates(storyImg.getWidth(), firstFloorY);
 	}
 	
 	public void setBuilding(MyBuilding building) {
@@ -74,49 +81,111 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	}
 			
 	public void paintComponent(Graphics graphics) {
+		// draw background			
 		graphics.drawImage(backgroundBottomImg, 0, 0, null);
-		for (int i = 0; i < storiesNumberOnFrame; i++) {
+		
+		// draw stories
+		for (int i = 0; i < AppConstants.APP_STORIES_ON_SCREEN; i++) {
 			graphics.drawImage(storyImg, 0, firstFloorY	- storyImg.getHeight() * i, null);
 		}
-		graphics.drawImage(elevatorImg, 
-				(int) (storyImg.getWidth() - elevatorImg.getWidth()) / 2, firstFloorY, null);
-		graphics.drawImage(elevatorUpImg, storyImg.getWidth(), firstFloorY, null);
 		
-		graphics.drawImage(
-				passengerImg, storyImg.getWidth()
-						- (passengerImg.getWidth() * AppConstants.PASSENGER_MULTIPLIER_NEAR_BY_WALL),
-				AppConstants.BASEMENT_FOR_PAINT_PASSENGERS, null);
+		// draw ladder
+		// TODO
+		
+		// draw some additional elements
+		// TODO
+		
+		// draw elevator
+		graphics.drawImage(elevatorImg, appElevator.getX(), appElevator.getY(), null);
 
-//		graphics.drawImage(passengerImg, storyImg.getWidth() 
-//				- (passengerImg.getWidth() * 8),
-//				AppConstants.BASEMENT_FOR_PAINT_PASSENGERS, null);
+		// draw passengers
 		if (building != null) {
-			graphics.drawImage(passengerImg, appPassengers.get(1).getX(), appPassengers.get(1).getY(), null);
+			for (PassengerAppCoordinates appPassenger : appPassengers) {
+				graphics.drawImage(passengerImg, appPassenger.getX(), appPassenger.getY(), null);
+			}
 		}
 		
+		// info block
 		graphics.setColor(Color.WHITE);
-		graphics.drawString("Story: 1", AppConstants.APP_PRESENTATION_AREA_WIDTH - 120, 20);
-		graphics.drawString("Moving: up", AppConstants.APP_PRESENTATION_AREA_WIDTH - 120, 40);
-		graphics.drawString("Circle: 1", AppConstants.APP_PRESENTATION_AREA_WIDTH - 120, 60);
+		graphics.drawString("Story: " + Controller.currentStory, AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT);
+		graphics.drawString("Circle: " + Controller.getCircleMoving(), AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 2);
+		
+		if (building != null) {
+			if (Controller.upwardMovement == true) {
+				graphics.drawString("Moving: up", AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 3);
+				graphics.drawImage(elevatorUpImg, AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 4, null);
+			} else {
+				graphics.drawString("Moving: down", AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 3);
+				graphics.drawImage(elevatorDownImg, AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 4, null);
+			}
+		} else {
+			graphics.drawString("Moving: none", AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 3);
+			graphics.drawImage(elevatorNoneImg, AppConstants.APP_INFO_BLOCK_WIDTH, AppConstants.APP_INFO_BLOCK_HEIGHT * 4, null);
+		}
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		
+		// background case
 		if (building != null) {
-			appPassengers.get(1).setX(appPassengers.get(1).getX() + 2);
+			// repaint background. elevator are moving UP.
+			if (Controller.upwardMovement == true && Controller.currentStory >= AppConstants.APP_STORY_TO_MOVE_BACKGROUND) {
+				// TODO up our background
+			}
+			
+			// repaint background. elevator are moving DOWN.
+			if (Controller.upwardMovement == false && Controller.currentStory >= AppConstants.APP_STORY_TO_MOVE_BACKGROUND) {
+				// TODO down our background. On first and second stories background doesn't move
+			}
 		}
-		firstFloorY = firstFloorY + 5;
+		
+		// stories case
+		
+		
+		// additional elements case
+		
+		
+		// elevator case
+		if (elevatorCanMove == false) {
+			appElevator.setY(appElevator.getY() - AppConstants.APP_MULTIPLIER_BOOTS);
+//			if (appElevator.getY() % storyImg.getHeight() == 0) {
+//				appElevatorMovePointer.setY(appElevatorMovePointer.getY() - storyImg.getHeight());
+//			}
+		}
+		
+		// passengers case
+		// first initialization passengers. 
+		// All Threads are waiting correct position on the screen
+		// checked method isOnPosition();
+		// just show moving our characters to the stories on the screen and + 1 stories - to show that building continue 
+		if (building != null && firstInitialization == false) {
+			for (PassengerAppCoordinates appPassenger : appPassengers) {
+				if (appPassenger.getCurrentStory() <= AppConstants.APP_STORIES_ON_SCREEN + 1)
+				synchronized (appPassenger.getPassenger()) {
+					appPassenger.setX(appPassenger.getX() - (int) (Math.random() * 3) - AppConstants.APP_MULTIPLIER_BOOTS);
+					
+				}
+			}
+			firstInitialization = true;
+		}
+		
+
+	
 		repaint();
 	}
 	
-	public void createPassengersInApp() {
+	public void createInstancesInPresentationArea() {
 		int story = 0;
 		for (DispatchStoryContainer dsc : building.getDispatchStoriesContainer()) {
 			System.out.println(dsc);
 			story++;
 			for (Passenger passenger : dsc.getPassengers()) {
-				appPassengers.add(new PassengerAppCoordinates(passenger, story, 0, AppConstants.BASEMENT_FOR_PAINT_PASSENGERS));
+				appPassengers.add(new PassengerAppCoordinates(passenger, story, 
+						AppConstants.APP_PRESENTATION_AREA_WIDTH + passengerImg.getWidth(), 
+						AppConstants.GROUND_LINE - passengerImg.getHeight()));
 			}
-		}		
+		}
 	}
 		
 }

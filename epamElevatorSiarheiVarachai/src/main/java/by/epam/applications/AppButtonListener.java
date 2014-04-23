@@ -32,6 +32,7 @@ public class AppButtonListener {
 	}
 	
 	public static void setButtonViewLogName() {
+		ElevatorApp.stopApp();
 		ElevatorApp.setButtonText(AppConstants.APP_BUTTON_VIEW_LOG_NAME);
 	}
 	

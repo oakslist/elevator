@@ -29,7 +29,7 @@ public class Controller {
 	
 	private boolean readyToExit;	 		//ready to close moving 
 	
-	private int circleMoving = 0;  // just to show how many circles elevator done in app
+	private static int circleMoving = 0;  // just to show how many circles elevator done in app
 	
 	public Controller(MyBuilding building) {
 		this.building = building;
@@ -44,6 +44,7 @@ public class Controller {
 		
 	// start elevator
 	public void move() {
+		Controller.circleMoving += 1;
 		while(!this.readyToExit) {
 			if (isAborted) {
 				break;
@@ -103,7 +104,6 @@ public class Controller {
 				checkReadyToExit();
 			}
 		}
-
 		//ready to close moving 
 		stopMoving();
 	}
@@ -306,7 +306,7 @@ public class Controller {
 				building.getElevator().getCurrentStory()));
 		Controller.currentStory = building.getElevator().getCurrentStory();
 		if (Controller.currentStory == ProgramConstants.INITIAL_STORY) {
-			circleMoving++;
+			setCircleMoving(getCircleMoving() + 1);
 			Controller.upwardMovement = true;
 		}
 		if (Controller.currentStory == this.building.getStoriesNumber()) {
@@ -427,6 +427,14 @@ public class Controller {
 	
 	public static void setAborted(boolean aborted) {
 		Controller.isAborted = aborted;
+	}
+
+	public static int getCircleMoving() {
+		return circleMoving;
+	}
+
+	public void setCircleMoving(int circleMoving) {
+		Controller.circleMoving = circleMoving;
 	}
 
 }
