@@ -45,8 +45,6 @@ public class ProgramConstants {
 	public final static int PASSENGER_ID_SIZE = 5;
 	public static ArrayList<String> alphaNumList = new ArrayList<String>();
 	
-	public static int animationBootsValue = 0;
-		
 	public static AppButtonListener appButtonListener = new AppButtonListener();
 			
 	static {

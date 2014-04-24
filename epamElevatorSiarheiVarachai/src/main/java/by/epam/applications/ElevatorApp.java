@@ -22,8 +22,11 @@ public class ElevatorApp extends JFrame {
 	private final static AppPresentationPanel PRESENTATION_AREA = new AppPresentationPanel();
 	private final static AppMessagesPanel MESSAGE_AREA = new AppMessagesPanel();
 	private static JButton button = new JButton(AppConstants.APP_BUTTON_START_NAME);
-	private static Timer timer = new Timer(24, PRESENTATION_AREA);
+	private static final int timerMillis = 50;
+	private static Timer timer = new Timer(timerMillis, PRESENTATION_AREA);
 	private static boolean isWorking = false;
+	private static boolean repaintPassenger = false;
+	private static boolean repaintElevator = false;
 	
 	public ElevatorApp(String title) {
 		super(title);
@@ -84,6 +87,10 @@ public class ElevatorApp extends JFrame {
 		timer.stop();
 	}
 	
+	public static void setTimer(int boost) {
+		timer.setDelay((int) timerMillis / boost);
+	}
+	
 	public static void setButtonText(String text) {
 		ElevatorApp.button.setText(text);
 	}
@@ -99,6 +106,32 @@ public class ElevatorApp extends JFrame {
 
 	public static void setWorking(boolean isWorking) {
 		ElevatorApp.isWorking = isWorking;
+	}
+
+	public static boolean isRepaintPassenger() {
+		return repaintPassenger;
+	}
+
+	public static void setRepaintPassenger(boolean repaintPassenger, String passengerId) {
+		ElevatorApp.repaintPassenger = repaintPassenger;
+		ElevatorApp.PRESENTATION_AREA.repaintPassenger(passengerId);
+	}
+	
+	public static void setRepaintPassenger(boolean repaintPassenger) {
+		ElevatorApp.repaintPassenger = repaintPassenger;
+	}
+
+	public static boolean isRepaintElevator() {
+		return repaintElevator;
+	}
+	
+	public static void setRepaintElevator(boolean repaintElevator) {
+		ElevatorApp.repaintElevator = repaintElevator;
+	}
+
+	public static void setRepaintElevator(boolean repaintElevator, int nextStory) {
+		ElevatorApp.repaintElevator = repaintElevator;
+		ElevatorApp.PRESENTATION_AREA.repaintElevator(nextStory);
 	}
 
 }

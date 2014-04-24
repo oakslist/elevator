@@ -3,7 +3,6 @@ package by.epam.model.core;
 import org.apache.log4j.Logger;
 
 import by.epam.LogConstants;
-import by.epam.applications.ElevatorApp;
 import by.epam.logs.MyLogWriter;
 import by.epam.model.beans.Passenger;
 import by.epam.model.beans.TransportationState;
@@ -16,7 +15,7 @@ public class TransportationTask implements Runnable {
 	private Passenger passenger;
 	private Thread thread;
 	private boolean wasAborted = false;
-
+	
 	public TransportationTask(Passenger passenger) {
 		this.threadName = passenger.getPassengerId();
 		this.passenger = passenger;
@@ -36,11 +35,10 @@ public class TransportationTask implements Runnable {
 				while ((!Controller.readyToLetIn 
 						|| (Controller.isPassengerGoingToUp(passenger) 
 								!= Controller.upwardMovement)) 
-						&& Controller.isAborted() == false && ElevatorApp.isWorking() == true) {
-					if (Controller.isAborted() == false && ElevatorApp.isWorking() == true) {
+						&& Controller.isAborted() == false) {
+					if (Controller.isAborted() == false) {
 						// waiting to set in Elevator
 						this.passenger.wait();
-						System.out.println("2222222222222222222222222222222222222");
 						if (Controller.isPassengerGoingToUp(passenger) 
 								!= Controller.upwardMovement) {
 							passenger.notifyAll();
@@ -57,13 +55,11 @@ public class TransportationTask implements Runnable {
 				while ((!Controller.readyToLetOut 
 						|| (passenger.getDestinationStory() 
 								!= Controller.currentStory)) 
-						&& Controller.isAborted() == false && ElevatorApp.isWorking() == false) {
+						&& Controller.isAborted() == false) {
 					passenger.notifyAll();
 					if (Controller.isAborted() == false) {
 						// waiting to go out from Elevator
-						System.out.println("33333333333333333333");
 						this.passenger.wait();
-						System.out.println("44444444444444444444444");
 					} else {
 						this.wasAborted = true;
 					}

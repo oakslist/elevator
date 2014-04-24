@@ -60,7 +60,6 @@ public class ConfigFileImpl {
 					Integer.valueOf(props.getProperty(ProgramConstants
 							.CONFIG_ANIMATION_BOOTS, ProgramConstants
 							.CONFIG_DEFAULT_ANIMATION_BOOTS)));
-			ProgramConstants.animationBootsValue = configFile.getAnimationBoost();
 			isStarted = true;			
 		}
 	}

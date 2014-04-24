@@ -49,7 +49,15 @@ public class Runner {
 		//start app and set all input data about passengers
 		if (configFile.getAnimationBoost() != 0) {
 			ElevatorApp.setInitialDataToApp(building);
-			ElevatorApp.startApp();
+			synchronized (building) {
+				ElevatorApp.setTimer(configFile.getAnimationBoost());
+				ElevatorApp.startApp();
+				try {
+					building.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		int story = 0;
