@@ -16,11 +16,13 @@ public class Passenger {
 
 	public Passenger(int storiesNumber, int originalPartId, int currentStory) {
 		this.passengerId = createRandomPassengerId(originalPartId);
-		this.destinationStory = createRandomDestinationStory(storiesNumber, currentStory);
+		this.destinationStory = createRandomDestinationStory(storiesNumber, 
+				currentStory);
 		this.transportationState = TransportationState.NOT_STARTED
 				.getTransportationState();
 		LOG.info(LogConstants.CREATE_NEW_PASSENGER + ": " + toString());
-		MyLogWriter.writeLog(LogConstants.CREATE_NEW_PASSENGER + ": " + toString());
+		MyLogWriter.writeLog(LogConstants
+				.CREATE_NEW_PASSENGER + ": " + toString());
 	}
 
 	public Passenger(String passengerId, int destinationStory) {

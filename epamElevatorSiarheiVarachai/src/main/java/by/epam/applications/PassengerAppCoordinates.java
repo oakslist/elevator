@@ -10,7 +10,8 @@ public class PassengerAppCoordinates extends InstanceAppCoordinates {
 	private boolean onPosition;
 	private int currentStep;
 	
-	public PassengerAppCoordinates(Passenger passenger,int currentStory , int xCoordinate, int yCoordinate) {
+	public PassengerAppCoordinates(Passenger passenger,int currentStory, 
+			int xCoordinate, int yCoordinate) {
 		super(xCoordinate, yCoordinate);
 		this.passenger = passenger;
 		this.currentStory = currentStory;

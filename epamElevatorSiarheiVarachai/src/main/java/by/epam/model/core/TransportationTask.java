@@ -9,7 +9,8 @@ import by.epam.model.beans.TransportationState;
 
 public class TransportationTask implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(TransportationTask.class);
+	private static final Logger LOG = Logger
+			.getLogger(TransportationTask.class);
 	
 	private String threadName;
 	private Passenger passenger;
@@ -23,7 +24,8 @@ public class TransportationTask implements Runnable {
 		thread = new Thread(this, this.threadName);
 		LOG.info(LogConstants.CREATE_PASSENGER_THREAD + threadName);
 		System.out.println(LogConstants.CREATE_PASSENGER_THREAD + threadName);
-		MyLogWriter.writeLog(LogConstants.CREATE_PASSENGER_THREAD + threadName);
+		MyLogWriter.writeLog(LogConstants
+				.CREATE_PASSENGER_THREAD + threadName);
 		thread.start();
 	}
 
@@ -77,7 +79,8 @@ public class TransportationTask implements Runnable {
 			} catch (InterruptedException e) {
 				setTransportationState(TransportationState.ABORTED);
 				LOG.info(passenger + " was interrupted! " + e.toString());
-				MyLogWriter.writeLog(passenger + " was interrupted! " + e.toString());
+				MyLogWriter.writeLog(passenger + " was interrupted! " 
+						+ e.toString());
 				e.printStackTrace();
 			}
 			passenger.notify();
@@ -88,10 +91,13 @@ public class TransportationTask implements Runnable {
 			setTransportationState(TransportationState.ABORTED);
 		}
 		if (Controller.isAborted() == true) {
-			LOG.info("passengerId = " + passenger.getPassengerId() +
-					"; transportationState = " + passenger.getTransportationState());
-			MyLogWriter.writeLog("passengerId = " + passenger.getPassengerId() +
-					"; transportationState = " + passenger.getTransportationState());
+			LOG.info("passengerId = " + passenger.getPassengerId() 
+					+ "; transportationState = " 
+					+ passenger.getTransportationState());
+			MyLogWriter.writeLog("passengerId = " 
+					+ passenger.getPassengerId() 
+					+ "; transportationState = " 
+					+ passenger.getTransportationState());
 		}
 	}
 	

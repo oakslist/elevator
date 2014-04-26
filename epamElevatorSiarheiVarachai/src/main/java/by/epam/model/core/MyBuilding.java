@@ -16,7 +16,8 @@ public class MyBuilding extends Building {
 	private int passengersNumber;
 	private Elevator elevator;
 	
-	public MyBuilding(int storiesNumber, int elevatorCapacity, int passengersNumber) {
+	public MyBuilding(int storiesNumber, int elevatorCapacity, 
+			int passengersNumber) {
 		super(storiesNumber);
 		this.passengersNumber = passengersNumber;
 		// initial common container for dispatchStoriesContainer by storiesNumber
@@ -50,12 +51,14 @@ public class MyBuilding extends Building {
 
 	public DispatchStoryContainer getDispatchStoryContainer(int storyNumber) {
 		final int CORRECT_BY_ZERO_ELEMENT = 1;
-		return dispatchStoriesContainer.get(storyNumber - CORRECT_BY_ZERO_ELEMENT);
+		return dispatchStoriesContainer
+				.get(storyNumber - CORRECT_BY_ZERO_ELEMENT);
 	}
 	
 	public ArrivalStoryContainer getArrivalStoryContainer(int storyNumber) {
 		final int CORRECT_BY_ZERO_ELEMENT = 1;
-		return arrivalStoriesContainer.get(storyNumber - CORRECT_BY_ZERO_ELEMENT);
+		return arrivalStoriesContainer
+				.get(storyNumber - CORRECT_BY_ZERO_ELEMENT);
 	}
 
 }

@@ -29,16 +29,19 @@ public class ConfigFileImpl {
 			MyLogWriter.writeLog(LogConstants.IMPL_CONFIG_FILE);
 			Properties props = new Properties();
 			try {
-				props.load(new FileInputStream(new File(ProgramConstants.WORKING_DIRECTORY + 
-						ProgramConstants.PACKAGE + ProgramConstants.CONFIG_FILE_NAME)));
+				props.load(new FileInputStream(new File(ProgramConstants
+						.WORKING_DIRECTORY + ProgramConstants.PACKAGE 
+						+ ProgramConstants.CONFIG_FILE_NAME)));
 			} catch (FileNotFoundException e) {
 				LOG.error("The configation file not found!", e);
-				MyLogWriter.writeLog("The configation file not found! :  " + e);
+				MyLogWriter.writeLog("The configation "
+						+ "file not found! :  " + e);
 				LOG.error("\t\tCreate default configuration!!!");
 				MyLogWriter.writeLog("\t\tCreate default configuration!!!");
 				e.printStackTrace();
 			} catch (IOException e) {
-				LOG.error("Problem in IO while the configurational file was read", e);
+				LOG.error("Problem in IO while the "
+						+ "configurational file was read", e);
 				MyLogWriter.writeLog("Problem in IO while the " +
 						"configurational file was read : " + e);
 				LOG.error("\t\tCreate default configuration!!!");
@@ -46,7 +49,8 @@ public class ConfigFileImpl {
 				MyLogWriter.writeLog("\t\tCreate default configuration!!!");
 				e.printStackTrace();
 			}
-	        // if file not found - we use default parameters from ProgramConstants class
+	        // if file not found - we use default parameters 
+			// from ProgramConstants class
 			configFile = new ConfigFile(
 					Integer.valueOf(props.getProperty(ProgramConstants
 							.CONFIG_STORIES_NUMBER, ProgramConstants

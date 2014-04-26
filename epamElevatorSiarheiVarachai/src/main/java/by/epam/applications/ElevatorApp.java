@@ -21,8 +21,8 @@ public class ElevatorApp extends JFrame {
 
 	private final static AppPresentationPanel PRESENTATION_AREA = new AppPresentationPanel();
 	private final static AppMessagesPanel MESSAGE_AREA = new AppMessagesPanel();
+	private final static int timerMillis = 50;
 	private static JButton button = new JButton(AppConstants.APP_BUTTON_START_NAME);
-	private static final int timerMillis = 50;
 	private static Timer timer = new Timer(timerMillis, PRESENTATION_AREA);
 	private static boolean isWorking = false;
 	private static boolean repaintPassenger = false;
@@ -65,14 +65,16 @@ public class ElevatorApp extends JFrame {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(AppConstants.APP_MAIN_WIDTH, AppConstants.APP_MAIN_HEIGHT);
+		return new Dimension(AppConstants.APP_MAIN_WIDTH, 
+				AppConstants.APP_MAIN_HEIGHT);
 	}
 	
 	public static void startElevatorAppFrame() {
 		JFrame frame = new ElevatorApp("Elevator");
-		frame.setSize(AppConstants.APP_MAIN_WIDTH, AppConstants.APP_MAIN_HEIGHT);
+		frame.setSize(AppConstants.APP_MAIN_WIDTH, 
+				AppConstants.APP_MAIN_HEIGHT);
 		frame.pack();
-//		frame.setResizable(false);
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
@@ -112,7 +114,8 @@ public class ElevatorApp extends JFrame {
 		return repaintPassenger;
 	}
 
-	public static void setRepaintPassenger(boolean repaintPassenger, String passengerId) {
+	public static void setRepaintPassenger(boolean repaintPassenger, 
+			String passengerId) {
 		ElevatorApp.repaintPassenger = repaintPassenger;
 		ElevatorApp.PRESENTATION_AREA.repaintPassenger(passengerId);
 	}
@@ -129,7 +132,8 @@ public class ElevatorApp extends JFrame {
 		ElevatorApp.repaintElevator = repaintElevator;
 	}
 
-	public static void setRepaintElevator(boolean repaintElevator, int nextStory) {
+	public static void setRepaintElevator(boolean repaintElevator, 
+			int nextStory) {
 		ElevatorApp.repaintElevator = repaintElevator;
 		ElevatorApp.PRESENTATION_AREA.repaintElevator(nextStory);
 	}

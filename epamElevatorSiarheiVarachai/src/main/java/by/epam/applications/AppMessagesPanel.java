@@ -17,9 +17,11 @@ public class AppMessagesPanel extends JPanel {
 	
 	public AppMessagesPanel() {
 		messagesArea.setEditable(false); // set textArea non-editable
-		super.setBorder(new TitledBorder (new EtchedBorder(), "Messages area"));
+		super.setBorder(new TitledBorder (new EtchedBorder(), 
+				"Messages area"));
 		JScrollPane scroll = new JScrollPane(messagesArea);
-	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants
+	    		.VERTICAL_SCROLLBAR_ALWAYS);
 	    
 	    super.setLayout(new BorderLayout());  //give our JPanel a BorderLayout
 	    super.add(scroll, BorderLayout.EAST);

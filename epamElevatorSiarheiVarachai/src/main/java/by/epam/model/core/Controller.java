@@ -16,25 +16,33 @@ public class Controller {
 	
 	private static final Logger LOG = Logger.getLogger(Controller.class);
 	
-	private static boolean isAborted = false;
-	
 	public static int numberBookedPlacesInElevator;
-	public static boolean upwardMovement;  //true = up, false = down
+	//true = up, false = down
+	public static boolean upwardMovement;  
 	public static int currentStory;  
 	public static boolean readyToSetInContainer = false;
 	
-	private MyBuilding building;
-	private boolean readyToMove;	 		//ready to change story
-	public static boolean readyToLetOut;	//ready to let passengers out from elevator
-	public static boolean readyToLetIn;	 	//ready to let passengers in to elevator
+	//ready to let passengers out from elevator
+	public static boolean readyToLetOut;	
+	//ready to let passengers in to elevator
+	public static boolean readyToLetIn;	 	
 	
-	private boolean readyToExit;	 		//ready to close moving 
-	
-	private static int circleMoving = 0;  // just to show how many circles elevator done in app
 	public static boolean isAppTurn = true;
 	
-	public Controller(MyBuilding building) {
+	private static boolean isAborted = false;
+	// just to show how many circles elevator done in app
+	private static int circleMoving = 0;  
+	
+	private ConfigFile configFile;
+	private MyBuilding building;
+	//ready to change story
+	private boolean readyToMove;	 		
+	//ready to close moving
+	private boolean readyToExit;	 		 
+	
+	public Controller(MyBuilding building, ConfigFile configFile) {
 		this.building = building;
+		this.configFile = configFile;
 		Controller.upwardMovement = true;
 		Controller.currentStory = building.getElevator().getCurrentStory();
 		this.readyToMove = false;
@@ -114,11 +122,13 @@ public class Controller {
 					.getDispatchStoryContainer(Controller.currentStory)
 					.getPassengers().size();
 			for (Passenger passenger : building
-					.getDispatchStoryContainer(Controller.currentStory).getPassengers()) {
+					.getDispatchStoryContainer(Controller.currentStory)
+					.getPassengers()) {
 				currentNumberCheckedPeoplesOnStory--;
 				Controller.numberBookedPlacesInElevator = building
-						.getElevator().getElevatorContainer().getPassengers().size();
-				// just must be == but and >= correct
+						.getElevator().getElevatorContainer()
+						.getPassengers().size();
+				// just must be == but and >= is correct too
 				if (Controller.numberBookedPlacesInElevator >= building
 						.getElevator().getElevatorCapacity()) {
 					isWorkingInMethod = false;
@@ -137,20 +147,25 @@ public class Controller {
 				if (Controller.readyToSetInContainer && !isAborted) {
 					LOG.info(LogConstants.getLogBoadingOfPassenger(passenger
 							.getPassengerId(), Controller.currentStory));
-					MyLogWriter.writeLog(LogConstants.getLogBoadingOfPassenger(passenger
-							.getPassengerId(), Controller.currentStory));
-					building.getElevator().getElevatorContainer().setPassenger(passenger);
+					MyLogWriter.writeLog(LogConstants
+							.getLogBoadingOfPassenger(passenger
+									.getPassengerId(), Controller.currentStory));
+					building.getElevator().getElevatorContainer()
+							.setPassenger(passenger);
 					building.getDispatchStoryContainer(Controller.currentStory)
 							.removePassenger(passenger.getPassengerId());
 					Controller.readyToSetInContainer = false;
-					synchronized (building) {
-						ElevatorApp.setRepaintPassenger(true, passenger.getPassengerId());
-						try {
-							while (ElevatorApp.isRepaintPassenger() == true) {
-								building.wait();
+					if (configFile.getAnimationBoost() != 0) {
+						synchronized (building) {
+							ElevatorApp.setRepaintPassenger(true, 
+									passenger.getPassengerId());
+							try {
+								while (ElevatorApp.isRepaintPassenger() == true) {
+									building.wait();
+								}
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
-						} catch (InterruptedException e) {
-							e.printStackTrace();
 						}
 					}
 					break;
@@ -196,14 +211,17 @@ public class Controller {
 					building.getElevator().getElevatorContainer()
 					.removePassenger(passenger.getPassengerId());
 					Controller.readyToSetInContainer = false;
-					synchronized (building) {
-						ElevatorApp.setRepaintPassenger(true, passenger.getPassengerId());
-						try {
-							while (ElevatorApp.isRepaintPassenger() == true) {
-								building.wait();
+					if (configFile.getAnimationBoost() != 0) {
+						synchronized (building) {
+							ElevatorApp.setRepaintPassenger(true, 
+									passenger.getPassengerId());
+							try {
+								while (ElevatorApp.isRepaintPassenger() == true) {
+									building.wait();
+								}
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
-						} catch (InterruptedException e) {
-							e.printStackTrace();
 						}
 					}
 					break;
@@ -225,7 +243,8 @@ public class Controller {
 				return;
 			}
 		}
-		if (building.getElevator().getElevatorContainer().getPassengers().size() > 0) {
+		if (building.getElevator().getElevatorContainer()
+				.getPassengers().size() > 0) {
 			return;
 		}
 		this.readyToExit = true;
@@ -286,9 +305,11 @@ public class Controller {
 					asc.getPassengers().get(i).notify();
 					if (Controller.isAborted == true) {
 						LOG.info("passengerID = " + asc.getPassengers()
-								.get(i).getPassengerId() + " in arrivalStoryContainer now");
+								.get(i).getPassengerId() 
+								+ " in arrivalStoryContainer now");
 						MyLogWriter.writeLog("passengerID = " + asc.getPassengers()
-								.get(i).getPassengerId() + " in arrivalStoryContainer now");
+								.get(i).getPassengerId() 
+								+ " in arrivalStoryContainer now");
 						try {
 							asc.getPassengers().get(i).wait();
 						} catch (InterruptedException e) {
@@ -321,14 +342,15 @@ public class Controller {
 				.getLogMovingElevator(Controller.currentStory, 
 				building.getElevator().getCurrentStory()));
 		Controller.currentStory = building.getElevator().getCurrentStory();
-		
-		synchronized (building) {
-			ElevatorApp.setRepaintElevator(true, Controller.currentStory);
-			while(ElevatorApp.isRepaintElevator() == true) {
-				try {
-					building.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		if (configFile.getAnimationBoost() != 0) { 
+			synchronized (building) {
+				ElevatorApp.setRepaintElevator(true, Controller.currentStory);
+				while(ElevatorApp.isRepaintElevator() == true) {
+					try {
+						building.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -376,15 +398,18 @@ public class Controller {
 		
 		//check are empty dispatch stories
 		int passengersNumberInDispatchStories = 0;
-		for (DispatchStoryContainer dsc : building.getDispatchStoriesContainer()) {
+		for (DispatchStoryContainer dsc : building
+				.getDispatchStoriesContainer()) {
 			passengersNumberInDispatchStories += dsc.getPassengers().size();
 		}		
 		if (passengersNumberInDispatchStories == 0) {
 			LOG.info(LogConstants.VALIDATION_OK_DISPATCH_STORIES_ARE_EMPTY);
-			MyLogWriter.writeLog(LogConstants.VALIDATION_OK_DISPATCH_STORIES_ARE_EMPTY);
+			MyLogWriter.writeLog(LogConstants
+					.VALIDATION_OK_DISPATCH_STORIES_ARE_EMPTY);
 		} else {
 			LOG.error(LogConstants.VALIDATION_ERR_DISPATCH_STORIES_DO_NOT_EMPTY);
-			MyLogWriter.writeLog(LogConstants.VALIDATION_ERR_DISPATCH_STORIES_DO_NOT_EMPTY);
+			MyLogWriter.writeLog(LogConstants
+					.VALIDATION_ERR_DISPATCH_STORIES_DO_NOT_EMPTY);
 		}
 		
 		//check is empty elevator
@@ -395,7 +420,8 @@ public class Controller {
 			MyLogWriter.writeLog(LogConstants.VALIDATION_OK_ELEVATOR_IS_EMPTY);
 		} else {
 			LOG.error(LogConstants.VALIDATION_ERR_ELEVATOR_DOES_NOT_EMPTY);
-			MyLogWriter.writeLog(LogConstants.VALIDATION_ERR_ELEVATOR_DOES_NOT_EMPTY);
+			MyLogWriter.writeLog(LogConstants
+					.VALIDATION_ERR_ELEVATOR_DOES_NOT_EMPTY);
 		}
 		
 		//check passenger's state and destination
@@ -408,11 +434,13 @@ public class Controller {
 			passengersNumberInArrivalStories += asc.getPassengers().size();
 			for (Passenger passenger : asc.getPassengers()) {
 				if (!passenger.getTransportationState()
-						.equals(TransportationState.COMPLETED.getTransportationState())) {
+						.equals(TransportationState
+								.COMPLETED.getTransportationState())) {
 					stateProblem++;
 					LOG.error(LogConstants.VALIDATION_ERR_PROBLEM_WITH_STATE + 
 							" Passenger ID = " + passenger.getPassengerId());
-					MyLogWriter.writeLog(LogConstants.VALIDATION_ERR_PROBLEM_WITH_STATE + 
+					MyLogWriter.writeLog(LogConstants
+							.VALIDATION_ERR_PROBLEM_WITH_STATE + 
 							" Passenger ID = " + passenger.getPassengerId());
 				}
 				if (passenger.getDestinationStory() != story) {
@@ -420,7 +448,8 @@ public class Controller {
 					LOG.error(LogConstants.VALIDATION_ERR_PROBLEM_WITH_DESTINATION + 
 							" Destination = " + passenger.getDestinationStory() + 
 							" current story = " + story);
-					MyLogWriter.writeLog(LogConstants.VALIDATION_ERR_PROBLEM_WITH_DESTINATION  + 
+					MyLogWriter.writeLog(LogConstants
+							.VALIDATION_ERR_PROBLEM_WITH_DESTINATION  + 
 							" Destination = " + passenger.getDestinationStory() + 
 							" current story = " + story);
 				}

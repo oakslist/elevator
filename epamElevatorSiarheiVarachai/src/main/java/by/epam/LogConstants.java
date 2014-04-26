@@ -12,9 +12,11 @@ public class LogConstants {
 	public final static String CREATE_BUILDING_SYSTEM = SEPARATING_LINE
 			+ "\nCREATED_BUILDING\n" + SEPARATING_LINE;
 	public final static String CREATE_BUILDING = "CREATED_BUILDING";
-	public final static String CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS = "CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS";
+	public final static String CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS 
+			= "CREATE_PASSENGERS_AND_SET_TO_STORY_CONTAINERS";
 	public final static String CREATE_NEW_PASSENGER = "CREATED_NEW_PASSENGER";
-	public final static String CREATE_PASSENGER_TRANSPORTATION_TASKS = "CREATE_PASSENGER_TRANSPORTATION_TASKS";
+	public final static String CREATE_PASSENGER_TRANSPORTATION_TASKS 
+			= "CREATE_PASSENGER_TRANSPORTATION_TASKS";
 	public final static String CREATE_PASSENGER_THREAD = "created passenger thread ";
 	public final static String ELEVATOR_STARTING = "ELEVATOR_STARTING";
 
@@ -41,21 +43,34 @@ public class LogConstants {
 
 	// validation section
 	public final static String VALIDATION = "VALIDATION";
-	public final static String PASSENGERS_NUMBER_IN_DISPATCH_STORIES = "PASSENGERS_NUMBER_IN_DISPATCH_STORIES = ";
-	public final static String PASSENGERS_NUMBER_IN_ELEVATOR = "PASSENGERS_NUMBER_IN_ELEVATOR = ";
-	public final static String PASSENGERS_NUMBER_IN_ARRIVAL_STORIES = "PASSENGERS_NUMBER_IN_ARRIVAL_STORIES = ";
+	public final static String PASSENGERS_NUMBER_IN_DISPATCH_STORIES 
+			= "PASSENGERS_NUMBER_IN_DISPATCH_STORIES = ";
+	public final static String PASSENGERS_NUMBER_IN_ELEVATOR 
+			= "PASSENGERS_NUMBER_IN_ELEVATOR = ";
+	public final static String PASSENGERS_NUMBER_IN_ARRIVAL_STORIES 
+			= "PASSENGERS_NUMBER_IN_ARRIVAL_STORIES = ";
 	// validation error messages
-	public final static String VALIDATION_ERR_DISPATCH_STORIES_DO_NOT_EMPTY = "dispatch stories aren't empty.";
-	public final static String VALIDATION_ERR_ELEVATOR_DOES_NOT_EMPTY = "elevator doesn't empty.";
-	public final static String VALIDATION_ERR_ARRIVAL_STORIES_DO_NOT_EQUAL_PASSENGERS_NUMBER = "arrival stories aren't equal passengersNumber.";
-	public final static String VALIDATION_ERR_PROBLEM_WITH_STATE = "problem with transportationState.COMPLETED.";
-	public final static String VALIDATION_ERR_PROBLEM_WITH_DESTINATION = "problem with destination.";
+	public final static String VALIDATION_ERR_DISPATCH_STORIES_DO_NOT_EMPTY 
+			= "dispatch stories aren't empty.";
+	public final static String VALIDATION_ERR_ELEVATOR_DOES_NOT_EMPTY 
+			= "elevator doesn't empty.";
+	public final static String VALIDATION_ERR_ARRIVAL_STORIES_DO_NOT_EQUAL_PASSENGERS_NUMBER 
+			= "arrival stories aren't equal passengersNumber.";
+	public final static String VALIDATION_ERR_PROBLEM_WITH_STATE 
+			= "problem with transportationState.COMPLETED.";
+	public final static String VALIDATION_ERR_PROBLEM_WITH_DESTINATION 
+			= "problem with destination.";
 	// validation OK messages
-	public final static String VALIDATION_OK_DISPATCH_STORIES_ARE_EMPTY = "dispatch stories are empty. VALIDATION - OK";
-	public final static String VALIDATION_OK_ELEVATOR_IS_EMPTY = "elevator is empty. VALIDATION - OK";
-	public final static String VALIDATION_OK_ARRIVAL_STORIES_ARE_EQUAL_PASSENGERS_NUMBER = "arrival stories are equal passengersNumber. VALIDATION - OK";
-	public final static String VALIDATION_OK_PASSENGERS_STATE = "all passengers have transportationState.COMPLETED. VALIDATION - OK";
-	public final static String VALIDATION_OK_PASSENGERS_DESTINATION = "all passengers got correct destination. VALIDATION - OK";
+	public final static String VALIDATION_OK_DISPATCH_STORIES_ARE_EMPTY 
+			= "dispatch stories are empty. VALIDATION - OK";
+	public final static String VALIDATION_OK_ELEVATOR_IS_EMPTY 
+			= "elevator is empty. VALIDATION - OK";
+	public final static String VALIDATION_OK_ARRIVAL_STORIES_ARE_EQUAL_PASSENGERS_NUMBER 
+			= "arrival stories are equal passengersNumber. VALIDATION - OK";
+	public final static String VALIDATION_OK_PASSENGERS_STATE 
+			= "all passengers have transportationState.COMPLETED. VALIDATION - OK";
+	public final static String VALIDATION_OK_PASSENGERS_DESTINATION 
+			= "all passengers got correct destination. VALIDATION - OK";
 	
 	
 	public static String getLogMovingElevator(int initialStory, int nextStory) {

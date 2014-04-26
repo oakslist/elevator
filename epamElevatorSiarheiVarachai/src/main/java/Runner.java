@@ -91,7 +91,7 @@ public class Runner {
 		MyLogWriter.writeLog(LogConstants.SEPARATING_LINE);
 		LOG.info(LogConstants.ELEVATOR_STARTING);
 		MyLogWriter.writeLog(LogConstants.ELEVATOR_STARTING);
-		Controller controller = new Controller(building);
+		Controller controller = new Controller(building, configFile);
 		controller.move();
 		
 		LOG.info(LogConstants.SEPARATING_LINE);

@@ -42,7 +42,7 @@ public class ProgramConstants {
 		
 			
 	// create list of char for random passengerId
-	public final static int PASSENGER_ID_SIZE = 5;
+	public final static int PASSENGER_ID_SIZE = 3;
 	public static ArrayList<String> alphaNumList = new ArrayList<String>();
 	
 	public static AppButtonListener appButtonListener = new AppButtonListener();

@@ -10,15 +10,14 @@ public class AppConstants {
 	
 	public static final int GROUND_LINE = 690;
 	public static final int BASEMENT_Y_LINE_FOR_PASSENGER_ON_FLOOR = 54;
-	public static final int BASEMENT_Y_FOR_PAINT_STORIES = GROUND_LINE - BASEMENT_Y_LINE_FOR_PASSENGER_ON_FLOOR;
-	public static final int BASEMENT_Y_FOR_PAINT_PASSENGERS = GROUND_LINE - BASEMENT_Y_LINE_FOR_PASSENGER_ON_FLOOR;
 	public static final int PASSENGER_MULTIPLIER_NEAR_BY_WALL = 2;
 	public static final int APP_X_FINISHED_PASSENGER = 60;
 	
 	
 	public static final int APP_MESSAGES_AREA_WIDTH = (int) (APP_MAIN_WIDTH / 7) * 3;
 	public static final int APP_MESSAGES_AREA_HEIGHT = APP_MAIN_HEIGHT;
-	public static final int APP_PRESENTATION_AREA_WIDTH = APP_MAIN_WIDTH - APP_MESSAGES_AREA_WIDTH;
+	public static final int APP_PRESENTATION_AREA_WIDTH = APP_MAIN_WIDTH 
+			- APP_MESSAGES_AREA_WIDTH;
 	public static final int APP_PRESENTATION_AREA_HEIGHT = APP_MAIN_HEIGHT;
 	
 	public static final int APP_INFO_BLOCK_WIDTH = APP_PRESENTATION_AREA_WIDTH - 120;
