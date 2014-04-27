@@ -26,6 +26,9 @@ public class AppConstants {
 	public static final int APP_PASSENGER_HEIGHT = 42;
 	public static final int APP_PASSENGER_WIDTH = 35;
 	
+	public static final int APP_HEALTH_WIDTH = 56;
+	public static final int APP_TIME_TO_HURT = 200;
+	
 	public static final String APP_BUTTON_START_NAME = "START";
 	public static final String APP_BUTTON_ABORT_NAME = "ABORT";
 	public static final String APP_BUTTON_VIEW_LOG_NAME = "VIEW LOG FILE";

@@ -14,6 +14,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
+import by.epam.applications.beans.HealthAppCoordinates;
 import by.epam.applications.beans.InstanceAppCoordinates;
 import by.epam.applications.beans.PassengerAppCoordinates;
 import by.epam.applications.beans.SpriteAnimator;
@@ -34,6 +35,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	private Image backgroundTop2Img;
 	private Image cloudOneImg;
 	private Image cloudTwoImg;
+	private BufferedImage deadBrainImg;
 	private BufferedImage elevatorImg;
 	private BufferedImage elevatorDownImg;
 	private BufferedImage elevatorUpImg;
@@ -48,6 +50,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	private MyBuilding building;
 	private SpriteAnimator animatorPassenger;
 	private SpriteAnimator animatorBrain;
+	private SpriteAnimator animatorDeadBrain;
 	
 	private int timeUntilNextCloud = 1000;
 	private int cloudsOnScreen = 1;
@@ -56,6 +59,8 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 			= new ArrayList<PassengerAppCoordinates>();
 	private List<InstanceAppCoordinates> appClouds 
 			= new ArrayList<InstanceAppCoordinates>();
+	private List<HealthAppCoordinates> appHealths 
+			= new ArrayList<HealthAppCoordinates>();
 	private InstanceAppCoordinates appElevator;
 	private InstanceAppCoordinates appBackground;
 	
@@ -67,11 +72,18 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	private List<PassengerAppCoordinates> drawAppPassengersInElevator 
 			= new ArrayList<PassengerAppCoordinates>();
 	
+	
+	private Image healthBarImg;
+	
 	public AppPresentationPanel() {
 		Dimension size = getPreferredSize();
 		size.width = AppConstants.APP_PRESENTATION_AREA_WIDTH;
 		setPreferredSize(size);
 		try {
+			deadBrainImg = ImageIO.read(getClass()
+					.getResource("/images/sprite_dead_brain.png"));
+			healthBarImg = ImageIO.read(getClass()
+					.getResource("/images/health_bar.png"));
 			backgroundBottomImg = ImageIO.read(getClass()
 					.getResource("/images/background.png"));
 			backgroundMiddleImg = ImageIO.read(getClass()
@@ -131,7 +143,8 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		graphics.drawImage(backgroundBottomImg, appBackground.getX(), 
 				appBackground.getY(), null);
 		
-		// draw some more additional elements
+		// draw some more additional elements here or
+		// if in each building - use drawBuilding() 
 		// TODO
 		
 		if (building != null) {
@@ -168,11 +181,57 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		if (animatorBrain != null) {
 			animatorBrain.update(System.currentTimeMillis());
 		}		
-		
+		if (animatorDeadBrain != null) {
+			animatorDeadBrain.update(System.currentTimeMillis());
+		}	
 		
 		// info block
 		drawInfoBlock(graphics);
 
+	}
+	
+	private void drawHealthBar(Graphics graphics, int story) {
+//		for (HealthAppCoordinates appHealth : appHealths) {
+		
+			if (appHealths.get(story).getHealth() >= 0) {
+				if (appHealths.get(story).getTimeToHurt() == 0) {
+					appHealths.get(story).setHealth(appHealths.get(story).getHealth() 
+							- appHealths.get(story).getMultiplier());
+					appHealths.get(story).setTimeToHurt(AppConstants.APP_TIME_TO_HURT);
+				} else {
+					appHealths.get(story).setTimeToHurt(appHealths.get(story).getTimeToHurt() - 1);
+				}
+			}
+//		}
+		
+//		for (HealthAppCoordinates appHealth : appHealths) {
+//			if (appHealth.getHealth() > 0) {
+//				if (appHealth.getTimeToHurt() == 0) {
+//					appHealth.setHealth(appHealth.getHealth() 
+//							- appHealth.getMultiplier());
+//					appHealth.setTimeToHurt(AppConstants.APP_TIME_TO_HURT);
+//				} else {
+//					appHealth.setTimeToHurt(appHealth.getTimeToHurt() - 1);
+//				}
+//			}
+//		}
+		
+		// used for the white background of health bar...
+		graphics.drawImage(healthBarImg, storyImg.getWidth() - storyImg.getWidth(), 
+				firstFloorY - storyImg.getHeight() 
+				* story + 40 + appBackground.getY(), null);
+		graphics.setColor(Color.WHITE);
+		graphics.fillRect(storyImg.getWidth() - storyImg.getWidth() + 3, 
+				firstFloorY - storyImg.getHeight() 
+				* story + 42 + appBackground.getY(), AppConstants.APP_HEALTH_WIDTH, 4);
+		// used for the actual health bar itself...
+		if (appHealths.get(story).getHealth() > 0) {
+			graphics.setColor(Color.RED);
+			graphics.fillRect(storyImg.getWidth() - storyImg.getWidth() + 3, 
+					firstFloorY - storyImg.getHeight() 
+					* story + 42 + appBackground.getY(), 
+					appHealths.get(story).getHealth(), 4);
+		}
 	}
 	
 	private void drawInfoBlock(Graphics graphics) {
@@ -251,8 +310,16 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 				graphics.drawString("Story: " +  (i + 1), 
 						storyImg.getWidth() - 75, 
 						firstFloorY - storyImg.getHeight() * i + 35);
-				graphics.drawImage(animatorBrain.sprite, 0, 
-						firstFloorY - storyImg.getHeight() * i + 50, null);
+				// show the brains on each story
+				if (appHealths.get(i).getHealth() >= 0) {
+					graphics.drawImage(animatorBrain.sprite, 0, 
+							firstFloorY - storyImg.getHeight() * i + 50 + appBackground.getY(), null);
+				} else {
+					graphics.drawImage(animatorDeadBrain.sprite, 2, 
+							firstFloorY - storyImg.getHeight() * i + 80 + appBackground.getY(), null);
+				}
+				drawHealthBar(graphics, i);
+				graphics.setColor(Color.WHITE);				
 			}
 		} else {
 			// top background
@@ -288,8 +355,16 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 						firstFloorY - storyImg.getHeight() * i + 9 + appBackground.getY());
 				graphics.drawString("Story: " +  (i + 1), storyImg.getWidth() - 80, 
 						firstFloorY - storyImg.getHeight() * i + 35 + appBackground.getY());
-				graphics.drawImage(animatorBrain.sprite, storyImg.getWidth() - storyImg.getWidth(), 
-						firstFloorY - storyImg.getHeight() * i + 50 + appBackground.getY(), null);
+				// show the brains on each story
+				if (appHealths.get(i).getHealth() >= 0) {
+					graphics.drawImage(animatorBrain.sprite, 0, 
+							firstFloorY - storyImg.getHeight() * i + 50 + appBackground.getY(), null);
+				} else {
+					graphics.drawImage(animatorDeadBrain.sprite, 2, 
+							firstFloorY - storyImg.getHeight() * i + 80 + appBackground.getY(), null);
+				}
+				drawHealthBar(graphics, i);
+				graphics.setColor(Color.WHITE);
 			}
 		}
 	}
@@ -458,6 +533,9 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 					drawAppPassenger.setOnPosition(true);
 					ElevatorApp.setRepaintPassenger(false);
 					drawAppPassenger.incCurrentStep();
+					// start decrement brain health
+					appHealths.get(drawAppPassenger.getPassenger()
+							.getDestinationStory() - 1).incMultiplier();
 				}
 				break;
 			}	
@@ -523,6 +601,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		// and + 1 stories - to show that building continue
 		ElevatorApp.setWorking(true);
 		
+		// create sprite for passengers
 		SpriteSheet spritePassenger = new SpriteSheet(passengerImg);
 		List<BufferedImage> spritesPassenger = new ArrayList<BufferedImage>();
 		
@@ -535,17 +614,31 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		animatorPassenger.setSpeed(200);
 		animatorPassenger.start();
 		
+		// create sprite for brains
 		SpriteSheet spriteBrain = new SpriteSheet(brainImg);
 		List<BufferedImage> spritesBrain = new ArrayList<BufferedImage>();
 		
 		spritesBrain.add(spriteBrain.grabSprite(7, 22, 62, 57));
-		spritesBrain.add(spriteBrain.grabSprite( 86, 21, 62, 57));
+		spritesBrain.add(spriteBrain.grabSprite(86, 21, 62, 57));
 		spritesBrain.add(spriteBrain.grabSprite(158, 21, 62, 57));
 		spritesBrain.add(spriteBrain.grabSprite(230, 21, 62, 57));
 		
 		animatorBrain = new SpriteAnimator(spritesBrain);
 		animatorBrain.setSpeed(200);
 		animatorBrain.start();
+
+		// create sprite for dead brains
+		SpriteSheet spriteDeadBrain = new SpriteSheet(deadBrainImg);
+		List<BufferedImage> spritesDeadBrain = new ArrayList<BufferedImage>();
+		
+		spritesDeadBrain.add(spriteDeadBrain.grabSprite(1, 3, 64, 53));
+		spritesDeadBrain.add(spriteDeadBrain.grabSprite(91, 2, 64, 53));
+		spritesDeadBrain.add(spriteDeadBrain.grabSprite(2, 68, 64, 53));
+		spritesDeadBrain.add(spriteDeadBrain.grabSprite(91, 70, 64, 53));
+		
+		animatorDeadBrain = new SpriteAnimator(spritesDeadBrain);
+		animatorDeadBrain.setSpeed(200);
+		animatorDeadBrain.start();
 		
 		for (PassengerAppCoordinates appPassenger : appPassengers) {
 			if (appPassenger.isOnPosition() == false) {
@@ -628,13 +721,16 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		int story = 0;
 		for (DispatchStoryContainer dsc : building.getDispatchStoriesContainer()) {
 			story++;
+			appHealths.add(new HealthAppCoordinates(storyImg.getWidth() 
+					- storyImg.getWidth(), firstFloorY - storyImg.getHeight() 
+					* story + 29 + appBackground.getY(), story));
 			for (Passenger passenger : dsc.getPassengers()) {
 				appPassengers.add(new PassengerAppCoordinates(passenger, story, 
 						AppConstants.APP_PRESENTATION_AREA_WIDTH 
 						+ AppConstants.APP_PASSENGER_WIDTH, 
 						AppConstants.GROUND_LINE - AppConstants.APP_PASSENGER_HEIGHT));
 			}
-		}
+		}		
 	}
 		
 }
