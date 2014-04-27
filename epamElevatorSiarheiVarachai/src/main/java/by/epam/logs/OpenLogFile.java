@@ -1,5 +1,5 @@
 package by.epam.logs;
-import by.epam.ProgramConstants;
+import by.epam.constants.ProgramConstants;
 
 
 public class OpenLogFile {

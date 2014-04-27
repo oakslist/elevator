@@ -3,7 +3,7 @@ package by.epam.model.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.epam.ProgramConstants;
+import by.epam.constants.ProgramConstants;
 import by.epam.model.beans.Building;
 import by.epam.model.beans.Elevator;
 import by.epam.model.containers.ArrivalStoryContainer;

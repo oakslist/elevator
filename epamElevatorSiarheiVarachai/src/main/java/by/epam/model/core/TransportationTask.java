@@ -2,7 +2,7 @@ package by.epam.model.core;
 
 import org.apache.log4j.Logger;
 
-import by.epam.LogConstants;
+import by.epam.constants.LogConstants;
 import by.epam.logs.MyLogWriter;
 import by.epam.model.beans.Passenger;
 import by.epam.model.beans.TransportationState;

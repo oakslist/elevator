@@ -1,6 +1,6 @@
 package by.epam.model.beans;
 
-import by.epam.ProgramConstants;
+import by.epam.constants.ProgramConstants;
 import by.epam.model.containers.ElevatorContainer;
 
 public class Elevator {

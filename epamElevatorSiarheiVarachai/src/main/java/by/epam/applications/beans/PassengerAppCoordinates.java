@@ -1,6 +1,6 @@
-package by.epam.applications;
+package by.epam.applications.beans;
 
-import by.epam.AppConstants;
+import by.epam.constants.AppConstants;
 import by.epam.model.beans.Passenger;
 
 public class PassengerAppCoordinates extends InstanceAppCoordinates {

@@ -7,7 +7,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,11 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-import by.epam.AppConstants;
-import by.epam.ProgramConstants;
+import by.epam.applications.beans.InstanceAppCoordinates;
+import by.epam.applications.beans.PassengerAppCoordinates;
+import by.epam.applications.beans.SpriteAnimator;
+import by.epam.applications.beans.SpriteSheet;
+import by.epam.constants.AppConstants;
 import by.epam.model.beans.Passenger;
 import by.epam.model.containers.DispatchStoryContainer;
 import by.epam.model.core.Controller;
@@ -33,18 +35,19 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 	private Image cloudOneImg;
 	private Image cloudTwoImg;
 	private BufferedImage elevatorImg;
-//	private BufferedImage elevatorDoorsClosedImg;
-//	private BufferedImage elevatorAlmostDoorsClosedImg;
 	private BufferedImage elevatorDownImg;
 	private BufferedImage elevatorUpImg;
 	private BufferedImage elevatorNoneImg;
 	private BufferedImage storyImg;
+	private BufferedImage brainImg;
 	private BufferedImage passengerImg;
 	private BufferedImage ladderImg;
 	private BufferedImage bottomImg;
 	
 	//all input data from main program (core)
 	private MyBuilding building;
+	private SpriteAnimator animatorPassenger;
+	private SpriteAnimator animatorBrain;
 	
 	private int timeUntilNextCloud = 1000;
 	private int cloudsOnScreen = 1;
@@ -69,39 +72,37 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		size.width = AppConstants.APP_PRESENTATION_AREA_WIDTH;
 		setPreferredSize(size);
 		try {
-			String imagePath = ProgramConstants.IMG_DIRECTORY;
-			backgroundBottomImg = ImageIO.read(
-					new File(imagePath + "background.png"));
-			backgroundMiddleImg = ImageIO.read(
-					new File(imagePath + "background_middle.png"));
-			backgroundTopImg = ImageIO.read(
-					new File(imagePath + "background_top.png"));
-			backgroundTop2Img = ImageIO.read(
-					new File(imagePath + "background_top2.png"));
-			elevatorImg = ImageIO.read(
-					new File(imagePath + "elevator.png"));
-//			elevatorDoorsClosedImg = ImageIO.read(new File(imagePath + 
-//					"elevator_doors_closed.png"));
-//			elevatorAlmostDoorsClosedImg = ImageIO.read(new File(imagePath + 
-//					"evelator_doors_almost_closed.png"));
-			elevatorDownImg = ImageIO.read(
-					new File(imagePath + "elevator_down.png"));
-			elevatorUpImg = ImageIO.read(
-					new File(imagePath + "elevator_up.png"));
-			elevatorNoneImg = ImageIO.read(
-					new File(imagePath + "elevator_none.png"));
-			storyImg = ImageIO.read(new File(imagePath + "story.png"));
-			passengerImg = ImageIO.read(
-					new File(imagePath + "passenger.png"));
-			ladderImg = ImageIO.read(
-					new File(imagePath + "ladder.png"));
-			bottomImg = ImageIO.read(
-					new File(imagePath + "bottom.png"));
-			cloudOneImg = ImageIO.read(
-					new File(imagePath + "cloud1.png"));
-			cloudTwoImg = ImageIO.read(
-					new File(imagePath + "cloud2.png"));
-			
+			backgroundBottomImg = ImageIO.read(getClass()
+					.getResource("/images/background.png"));
+			backgroundMiddleImg = ImageIO.read(getClass()
+					.getResource("/images/background_middle.png"));
+			backgroundTopImg = ImageIO.read(getClass()
+					.getResource("/images/background_top.png"));
+			backgroundTop2Img = ImageIO.read(getClass()
+					.getResource("/images/background_top2.png"));
+			elevatorImg = ImageIO.read(getClass()
+					.getResource("/images/elevator.png"));
+			elevatorDownImg = ImageIO.read(getClass()
+					.getResource("/images/elevator_down.png"));
+			elevatorUpImg = ImageIO.read(getClass()
+					.getResource("/images/elevator_up.png"));
+			elevatorNoneImg = ImageIO.read(getClass()
+					.getResource("/images/elevator_none.png"));
+			storyImg = ImageIO.read(getClass()
+					.getResource("/images/story.png"));
+			brainImg = ImageIO.read(getClass()
+					.getResource("/images/brain_sprite.png"));
+			passengerImg = ImageIO.read(getClass()
+					.getResource("/images/sprite_zombie.png"));
+			ladderImg = ImageIO.read(getClass()
+					.getResource("/images/ladder.png"));
+			bottomImg = ImageIO.read(getClass()
+					.getResource("/images/bottom.png"));
+			cloudOneImg = ImageIO.read(getClass()
+					.getResource("/images/cloud1.png"));
+			cloudTwoImg = ImageIO.read(getClass()
+					.getResource("/images/cloud2.png"));
+		
 			firstFloorY = AppConstants.GROUND_LINE - storyImg.getHeight();
 			
 			appClouds.add(new InstanceAppCoordinates(0, 
@@ -130,7 +131,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		graphics.drawImage(backgroundBottomImg, appBackground.getX(), 
 				appBackground.getY(), null);
 		
-		// draw some additional elements
+		// draw some more additional elements
 		// TODO
 		
 		if (building != null) {
@@ -143,7 +144,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 			graphics.drawString("Capacity: " + building
 					.getElevator().getElevatorCapacity(), 
 					appElevator.getX() + 1, appElevator.getY() - 20);
-			graphics.drawString("People: " + building.getElevator()
+			graphics.drawString("Zombie: " + building.getElevator()
 					.getElevatorContainer().getPassengers().size(), 
 					appElevator.getX() + 1, appElevator.getY() - 5);
 
@@ -151,15 +152,23 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 			if (building != null) {
 //				int i = 0;
 				for (PassengerAppCoordinates appPassenger : appPassengers) {
-					graphics.drawImage(passengerImg, appPassenger.getX(), 
+					graphics.drawImage(animatorPassenger.sprite, appPassenger.getX(), 
 							appPassenger.getY(), null);
-					// for show id passengers.
+					// for show id passengers. int i = 0 above for need to be uncommented
 //					graphics.drawString("id: " 
 //					+ appPassenger.getPassenger().getPassengerId(), 
 //					appPassenger.getX(), appPassenger.getY() - 9 * i++);
 				}
 			}
 		}
+		
+		if (animatorPassenger != null) {
+			animatorPassenger.update(System.currentTimeMillis());
+		}
+		if (animatorBrain != null) {
+			animatorBrain.update(System.currentTimeMillis());
+		}		
+		
 		
 		// info block
 		drawInfoBlock(graphics);
@@ -240,8 +249,10 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 						(int) storyImg.getWidth() / 2 - 200, 
 						firstFloorY - storyImg.getHeight() * i + 9);
 				graphics.drawString("Story: " +  (i + 1), 
-						storyImg.getWidth() - 75 , 
+						storyImg.getWidth() - 75, 
 						firstFloorY - storyImg.getHeight() * i + 35);
+				graphics.drawImage(animatorBrain.sprite, 0, 
+						firstFloorY - storyImg.getHeight() * i + 50, null);
 			}
 		} else {
 			// top background
@@ -275,8 +286,10 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 						+ building.getArrivalStoryContainer(i + 1).getPassengers().size(), 
 						(int) storyImg.getWidth() / 2 - 200, 
 						firstFloorY - storyImg.getHeight() * i + 9 + appBackground.getY());
-				graphics.drawString("Story: " +  (i + 1), storyImg.getWidth() - 75, 
+				graphics.drawString("Story: " +  (i + 1), storyImg.getWidth() - 80, 
 						firstFloorY - storyImg.getHeight() * i + 35 + appBackground.getY());
+				graphics.drawImage(animatorBrain.sprite, storyImg.getWidth() - storyImg.getWidth(), 
+						firstFloorY - storyImg.getHeight() * i + 50 + appBackground.getY(), null);
 			}
 		}
 	}
@@ -412,11 +425,16 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		}
 		
 		// passengers case
-		// first initialization passengers. 
+		// first initialization passengers.
 		if (building != null && firstInitialization == false) {
 			createFirstInitialization();
-		} 
-		
+		}
+		if (animatorPassenger != null) {
+			animatorPassenger.update(System.currentTimeMillis());
+		}
+		if (animatorBrain != null) {
+			animatorBrain.update(System.currentTimeMillis());
+		}
 		if (ElevatorApp.isWorking() == true 
 				&& ElevatorApp.isRepaintPassenger() == true) {
 			switch (drawAppPassenger.getCurrentStep()) {
@@ -425,7 +443,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 						- (int) (Math.random() 
 						* (AppConstants.APP_MULTIPLIER_BOOTS)) 
 						- AppConstants.APP_MULTIPLIER_BOOTS);
-				if (drawAppPassenger.getX() <= (int) (storyImg.getWidth() / 2)) {
+				if (drawAppPassenger.getX() <= (int) (storyImg.getWidth() / 2) - 20) {
 					drawAppPassenger.setOnPosition(true);
 					ElevatorApp.setRepaintPassenger(false);
 					drawAppPassenger.incCurrentStep();
@@ -504,6 +522,31 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 		// just show moving our characters to the stories on the screen
 		// and + 1 stories - to show that building continue
 		ElevatorApp.setWorking(true);
+		
+		SpriteSheet spritePassenger = new SpriteSheet(passengerImg);
+		List<BufferedImage> spritesPassenger = new ArrayList<BufferedImage>();
+		
+		spritesPassenger.add(spritePassenger.grabSprite(10, 163, 32, 42));
+		spritesPassenger.add(spritePassenger.grabSprite(60, 163, 33, 42));
+		spritesPassenger.add(spritePassenger.grabSprite(114, 163, 35, 42));
+		spritesPassenger.add(spritePassenger.grabSprite(158, 163, 32, 42));
+		
+		animatorPassenger = new SpriteAnimator(spritesPassenger);
+		animatorPassenger.setSpeed(200);
+		animatorPassenger.start();
+		
+		SpriteSheet spriteBrain = new SpriteSheet(brainImg);
+		List<BufferedImage> spritesBrain = new ArrayList<BufferedImage>();
+		
+		spritesBrain.add(spriteBrain.grabSprite(7, 22, 62, 57));
+		spritesBrain.add(spriteBrain.grabSprite( 86, 21, 62, 57));
+		spritesBrain.add(spriteBrain.grabSprite(158, 21, 62, 57));
+		spritesBrain.add(spriteBrain.grabSprite(230, 21, 62, 57));
+		
+		animatorBrain = new SpriteAnimator(spritesBrain);
+		animatorBrain.setSpeed(200);
+		animatorBrain.start();
+		
 		for (PassengerAppCoordinates appPassenger : appPassengers) {
 			if (appPassenger.isOnPosition() == false) {
 				switch (appPassenger.getCurrentStep()) {
@@ -515,7 +558,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 					if (appPassenger.isOnPosition() == false 
 							&& appPassenger.getX() <= AppConstants
 									.APP_PRESENTATION_AREA_WIDTH 
-									- passengerImg.getWidth() - 160) {
+									- AppConstants.APP_PASSENGER_WIDTH - 160) {
 						appPassenger.incCurrentStep();
 					}
 					break;
@@ -536,8 +579,8 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 						// kill unnecessary passengers in moving top
 						if (appPassenger.getCurrentStory() > AppConstants
 								.APP_STORIES_ON_SCREEN 
-								&& appPassenger.getY() < 0 - passengerImg.getHeight()) {
-							appPassenger.setX(storyImg.getWidth() - (passengerImg.getWidth() * 2));
+								&& appPassenger.getY() < 0 - AppConstants.APP_PASSENGER_HEIGHT) {
+							appPassenger.setX(storyImg.getWidth() - (AppConstants.APP_PASSENGER_WIDTH * 2));
 							appPassenger.setY(storyImg.getHeight()
 									* (AppConstants.APP_STORIES_ON_SCREEN 
 											- appPassenger.getCurrentStory() + 1) 
@@ -555,7 +598,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 									.APP_MULTIPLIER_BOOTS)) 
 							- AppConstants.APP_MULTIPLIER_BOOTS);
 					if (appPassenger.getX() <= (storyImg.getWidth() 
-							- (passengerImg.getWidth() * 2))) {
+							- (AppConstants.APP_PASSENGER_WIDTH * 2))) {
 						appPassenger.incCurrentStep();
 						appPassenger.setOnPosition(true);
 					}
@@ -588,8 +631,8 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 			for (Passenger passenger : dsc.getPassengers()) {
 				appPassengers.add(new PassengerAppCoordinates(passenger, story, 
 						AppConstants.APP_PRESENTATION_AREA_WIDTH 
-						+ passengerImg.getWidth(), 
-						AppConstants.GROUND_LINE - passengerImg.getHeight()));
+						+ AppConstants.APP_PASSENGER_WIDTH, 
+						AppConstants.GROUND_LINE - AppConstants.APP_PASSENGER_HEIGHT));
 			}
 		}
 	}

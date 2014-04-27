@@ -1,4 +1,4 @@
-package by.epam;
+package by.epam.constants;
 
 public class AppConstants {
 	
@@ -11,7 +11,7 @@ public class AppConstants {
 	public static final int GROUND_LINE = 690;
 	public static final int BASEMENT_Y_LINE_FOR_PASSENGER_ON_FLOOR = 54;
 	public static final int PASSENGER_MULTIPLIER_NEAR_BY_WALL = 2;
-	public static final int APP_X_FINISHED_PASSENGER = 60;
+	public static final int APP_X_FINISHED_PASSENGER = 55;
 	
 	
 	public static final int APP_MESSAGES_AREA_WIDTH = (int) (APP_MAIN_WIDTH / 7) * 3;
@@ -22,6 +22,9 @@ public class AppConstants {
 	
 	public static final int APP_INFO_BLOCK_WIDTH = APP_PRESENTATION_AREA_WIDTH - 120;
 	public static final int APP_INFO_BLOCK_HEIGHT = 20;
+	
+	public static final int APP_PASSENGER_HEIGHT = 42;
+	public static final int APP_PASSENGER_WIDTH = 35;
 	
 	public static final String APP_BUTTON_START_NAME = "START";
 	public static final String APP_BUTTON_ABORT_NAME = "ABORT";

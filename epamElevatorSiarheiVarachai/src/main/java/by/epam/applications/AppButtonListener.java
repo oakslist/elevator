@@ -1,6 +1,6 @@
 package by.epam.applications;
 
-import by.epam.AppConstants;
+import by.epam.constants.AppConstants;
 import by.epam.model.core.Controller;
 
 public class AppButtonListener {

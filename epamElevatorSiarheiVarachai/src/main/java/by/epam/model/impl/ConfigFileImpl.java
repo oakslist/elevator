@@ -1,15 +1,13 @@
 package by.epam.model.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import by.epam.LogConstants;
-import by.epam.ProgramConstants;
+import by.epam.constants.LogConstants;
+import by.epam.constants.ProgramConstants;
 import by.epam.logs.MyLogWriter;
 import by.epam.model.core.ConfigFile;
 
@@ -29,9 +27,7 @@ public class ConfigFileImpl {
 			MyLogWriter.writeLog(LogConstants.IMPL_CONFIG_FILE);
 			Properties props = new Properties();
 			try {
-				props.load(new FileInputStream(new File(ProgramConstants
-						.WORKING_DIRECTORY + ProgramConstants.PACKAGE 
-						+ ProgramConstants.CONFIG_FILE_NAME)));
+				props.load(getClass().getResourceAsStream("/config.property"));
 			} catch (FileNotFoundException e) {
 				LOG.error("The configation file not found!", e);
 				MyLogWriter.writeLog("The configation "

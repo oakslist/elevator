@@ -1,4 +1,4 @@
-package by.epam;
+package by.epam.constants;
 
 import java.io.File;
 import java.util.ArrayList;

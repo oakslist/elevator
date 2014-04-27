@@ -1,4 +1,4 @@
-package by.epam.applications;
+package by.epam.applications.beans;
 
 public class InstanceAppCoordinates {
 	

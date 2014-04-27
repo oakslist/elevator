@@ -1,10 +1,12 @@
+package by.epam;
+
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-import by.epam.LogConstants;
-import by.epam.ProgramConstants;
 import by.epam.applications.ElevatorApp;
+import by.epam.constants.LogConstants;
+import by.epam.constants.ProgramConstants;
 import by.epam.logs.MyLogWriter;
 import by.epam.model.beans.Passenger;
 import by.epam.model.containers.DispatchStoryContainer;

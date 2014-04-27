@@ -1,4 +1,4 @@
-package by.epam;
+package by.epam.constants;
 
 public class LogConstants {
 

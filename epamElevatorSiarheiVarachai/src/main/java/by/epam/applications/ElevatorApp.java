@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
-import by.epam.AppConstants;
-import by.epam.ProgramConstants;
+import by.epam.constants.AppConstants;
+import by.epam.constants.ProgramConstants;
 import by.epam.logs.OpenLogFile;
 import by.epam.model.core.MyBuilding;
 
