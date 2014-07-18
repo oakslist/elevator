@@ -37,8 +37,8 @@ public class TransportationTask implements Runnable {
 				while ((!Controller.readyToLetIn 
 						|| (Controller.isPassengerGoingToUp(passenger) 
 								!= Controller.upwardMovement)) 
-						&& Controller.isAborted() == false) {
-					if (Controller.isAborted() == false) {
+						&& Controller.isControllerAborted() == false) {
+					if (Controller.isControllerAborted() == false) {
 						// waiting to set in Elevator
 						this.passenger.wait();
 						if (Controller.isPassengerGoingToUp(passenger) 
@@ -49,7 +49,7 @@ public class TransportationTask implements Runnable {
 						this.wasAborted = true;
 					}
 				}
-				if (Controller.isAborted() == false) {
+				if (Controller.isControllerAborted() == false) {
 					Controller.setInElevator(passenger);
 				} else {
 					this.wasAborted = true;
@@ -57,22 +57,22 @@ public class TransportationTask implements Runnable {
 				while ((!Controller.readyToLetOut 
 						|| (passenger.getDestinationStory() 
 								!= Controller.currentStory)) 
-						&& Controller.isAborted() == false) {
+						&& Controller.isControllerAborted() == false) {
 					passenger.notifyAll();
-					if (Controller.isAborted() == false) {
+					if (Controller.isControllerAborted() == false) {
 						// waiting to go out from Elevator
 						this.passenger.wait();
 					} else {
 						this.wasAborted = true;
 					}
 				}
-				if (Controller.isAborted() == false) {
+				if (Controller.isControllerAborted() == false) {
 					Controller.outFromElevator(passenger);
 				} else {
 					this.wasAborted = true;
 				}
-				passenger.notify();
-				if (Controller.isAborted() == false) {
+				passenger.notifyAll(); 
+				if (Controller.isControllerAborted() == false) {
 					// waiting all finished processes
 					this.passenger.wait();
 				} 				
@@ -83,14 +83,14 @@ public class TransportationTask implements Runnable {
 						+ e.toString());
 				e.printStackTrace();
 			}
-			passenger.notify();
+			passenger.notifyAll(); 
 		}
 		if (this.wasAborted == false) {
 			setTransportationState(TransportationState.COMPLETED);
 		} else {
 			setTransportationState(TransportationState.ABORTED);
 		}
-		if (Controller.isAborted() == true) {
+		if (Controller.isControllerAborted() == true) {
 			LOG.info("passengerId = " + passenger.getPassengerId() 
 					+ "; transportationState = " 
 					+ passenger.getTransportationState());

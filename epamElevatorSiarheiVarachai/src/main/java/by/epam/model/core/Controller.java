@@ -29,7 +29,7 @@ public class Controller {
 	
 	public static boolean isAppTurn = true;
 	
-	private static boolean isAborted = false;
+	private static boolean isControllerAborted = false;
 	// just to show how many circles elevator done in app
 	private static int circleMoving = 0;  
 	
@@ -49,14 +49,14 @@ public class Controller {
 		Controller.readyToLetOut = false;
 		Controller.readyToLetIn = true;
 		this.readyToExit = false;
-		Controller.isAborted = false;
+		Controller.isControllerAborted = false;
 	}
 		
 	// start elevator
 	public void move() {
 		Controller.circleMoving++;
 		while(!this.readyToExit) {
-			if (isAborted) {
+			if (isControllerAborted) {
 				break;
 			}
 			//ready to change story
@@ -66,14 +66,14 @@ public class Controller {
 				Controller.readyToLetOut = true;
 				Controller.readyToLetIn = true;
 			}
-			if (isAborted) {
+			if (isControllerAborted) {
 				break;
 			} else {
-				try {
-					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 			}
 			//ready to let passengers out from elevator
 			if (Controller.readyToLetOut) {
@@ -81,14 +81,14 @@ public class Controller {
 					letPassengerOut();
 				}
 			}
-			if (isAborted) {
+			if (isControllerAborted) {
 				break;
 			} else {
-				try {
-					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 			}
 			//ready to let passengers in to elevator
 			if (Controller.readyToLetIn) {
@@ -97,14 +97,14 @@ public class Controller {
 				}
 				this.readyToMove = true;
 			}
-			if (isAborted) {
+			if (isControllerAborted) {
 				break;
 			} else {
-				try {
-					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+//				try {
+//					Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 				checkReadyToExit();
 			}
 		}
@@ -116,7 +116,7 @@ public class Controller {
 		int currentNumberCheckedPeoplesOnStory;
 		boolean isWorkingInMethod = true;
 		while (building.getDispatchStoryContainer(Controller.currentStory)
-				.getPassengers().size() > 0 && isWorkingInMethod && !isAborted) {
+				.getPassengers().size() > 0 && isWorkingInMethod && !isControllerAborted) {
 			Controller.readyToSetInContainer = false;
 			currentNumberCheckedPeoplesOnStory = building
 					.getDispatchStoryContainer(Controller.currentStory)
@@ -135,16 +135,16 @@ public class Controller {
 					break;
 				}
 				synchronized (passenger) {
-					passenger.notify();
+					passenger.notifyAll(); 
 					try {
-						if (isAborted == false) {
+						if (isControllerAborted == false) {
 							passenger.wait();
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				if (Controller.readyToSetInContainer && !isAborted) {
+				if (Controller.readyToSetInContainer && !isControllerAborted) {
 					LOG.info(LogConstants.getLogBoadingOfPassenger(passenger
 							.getPassengerId(), Controller.currentStory));
 					MyLogWriter.writeLog(LogConstants
@@ -182,7 +182,7 @@ public class Controller {
 	private void letPassengerOut() {
 		int currentNumberCheckedPeoplesInElevator;
 		boolean isWorkingInMethod = true;
-		while(isWorkingInMethod && !isAborted) {
+		while(isWorkingInMethod && !isControllerAborted) {
 			Controller.readyToSetInContainer = false;
 			currentNumberCheckedPeoplesInElevator = building
 					.getElevator().getElevatorContainer().getPassengers().size();
@@ -190,16 +190,16 @@ public class Controller {
 					.getElevatorContainer().getPassengers()) {
 				currentNumberCheckedPeoplesInElevator--;
 				synchronized (passenger) {
-					passenger.notify();
+					passenger.notifyAll();
 					try {
-						if (isAborted == false) {
+						if (isControllerAborted == false) {
 							passenger.wait();
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				if (Controller.readyToSetInContainer && !isAborted) {
+				if (Controller.readyToSetInContainer && !isControllerAborted) {
 					LOG.info(LogConstants
 							.getLogDeboadingOfPassenger(passenger.getPassengerId(), 
 							Controller.currentStory));
@@ -253,7 +253,7 @@ public class Controller {
 	private void stopMoving() {
 		
 		// finish all aborted passengers thread
-		if (Controller.isAborted == true) {
+		if (Controller.isControllerAborted == true) {
 			
 			LOG.info(LogConstants.SEPARATING_LINE);
 			LOG.info(LogConstants.ABORTED);
@@ -265,7 +265,7 @@ public class Controller {
 					.getDispatchStoriesContainer()) {
 				for (int i = 0; i < dsc.getPassengers().size(); i++) {
 					synchronized (dsc.getPassengers().get(i)) {
-						dsc.getPassengers().get(i).notify();
+						dsc.getPassengers().get(i).notifyAll(); 
 						LOG.info("passengerID = " + dsc.getPassengers()
 								.get(i).getPassengerId() + 
 								" in dispatchStoryContainer now");
@@ -284,7 +284,7 @@ public class Controller {
 			for (Passenger passenger : building.getElevator()
 					.getElevatorContainer().getPassengers()) {
 				synchronized (passenger) {
-					passenger.notify();
+					passenger.notifyAll(); 
 					LOG.info("passengerID = " + passenger.getPassengerId() + 
 							" in elevatorContainer now");
 					MyLogWriter.writeLog("passengerID = " + passenger.getPassengerId() + 
@@ -302,8 +302,8 @@ public class Controller {
 		for (ArrivalStoryContainer asc : building.getArrivalStoriesContainer()) {
 			for (int i = 0; i < asc.getPassengers().size(); i++) {
 				synchronized (asc.getPassengers().get(i)) {
-					asc.getPassengers().get(i).notify();
-					if (Controller.isAborted == true) {
+					asc.getPassengers().get(i).notifyAll(); 
+					if (Controller.isControllerAborted == true) {
 						LOG.info("passengerID = " + asc.getPassengers()
 								.get(i).getPassengerId() 
 								+ " in arrivalStoryContainer now");
@@ -478,12 +478,12 @@ public class Controller {
 		}
 	}
 
-	public static boolean isAborted() {
-		return Controller.isAborted;
+	public static boolean isControllerAborted() {
+		return Controller.isControllerAborted;
 	}
 	
-	public static void setAborted(boolean aborted) {
-		Controller.isAborted = aborted;
+	public static void setControllerAborted(boolean aborted) {
+		Controller.isControllerAborted = aborted;
 	}
 
 	public static int getCircleMoving() {

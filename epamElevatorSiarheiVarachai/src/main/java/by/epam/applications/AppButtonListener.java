@@ -27,8 +27,10 @@ public class AppButtonListener {
 	}
 
 	public void setAbortButtonClicked(boolean abortButtonClicked) {
-		ElevatorApp.stopApp();
-		Controller.setAborted(abortButtonClicked);
+//		if (abortButtonClicked == true) {
+//			ElevatorApp.stopApp();
+//		}
+		Controller.setControllerAborted(abortButtonClicked);
 	}
 	
 	public static void setButtonViewLogName() {

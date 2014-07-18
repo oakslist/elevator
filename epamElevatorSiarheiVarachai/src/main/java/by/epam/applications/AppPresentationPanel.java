@@ -157,7 +157,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 			graphics.drawString("Capacity: " + building
 					.getElevator().getElevatorCapacity(), 
 					appElevator.getX() + 1, appElevator.getY() - 20);
-			graphics.drawString("Zombie: " + building.getElevator()
+			graphics.drawString("Zombies: " + building.getElevator()
 					.getElevatorContainer().getPassengers().size(), 
 					appElevator.getX() + 1, appElevator.getY() - 5);
 
@@ -713,6 +713,7 @@ public class AppPresentationPanel extends JComponent implements ActionListener {
 			firstInitialization = true;
 			synchronized (building) {
 				building.notifyAll();
+				ElevatorApp.setButtonEnabled(true);
 			}
 		}		
 	}

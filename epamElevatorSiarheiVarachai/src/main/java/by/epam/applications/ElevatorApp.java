@@ -21,7 +21,7 @@ public class ElevatorApp extends JFrame {
 
 	private final static AppPresentationPanel PRESENTATION_AREA = new AppPresentationPanel();
 	private final static AppMessagesPanel MESSAGE_AREA = new AppMessagesPanel();
-	private final static int timerMillis = 50;
+	private final static int timerMillis = 100;
 	private static JButton button = new JButton(AppConstants.APP_BUTTON_START_NAME);
 	private static Timer timer = new Timer(timerMillis, PRESENTATION_AREA);
 	private static boolean isWorking = false;
@@ -57,10 +57,15 @@ public class ElevatorApp extends JFrame {
 					ProgramConstants.appButtonListener
 							.startButtonlistener(true);
 					button.setText(AppConstants.APP_BUTTON_ABORT_NAME);
+					setButtonEnabled(false);
 				}
 			}
 		});
 	
+	}
+	
+	public static void setButtonEnabled(boolean bool) {
+		ElevatorApp.button.setEnabled(bool);
 	}
 	
 	@Override

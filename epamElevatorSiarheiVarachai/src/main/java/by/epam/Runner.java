@@ -82,9 +82,9 @@ public class Runner {
 			}
 		}
 		
-		// waiting to finish passengers thread
+		// just waiting until passenger's threads are created 
 		try {
-			Thread.sleep(ProgramConstants.DEFAULT_SLEEP_TIME);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}		
@@ -101,7 +101,7 @@ public class Runner {
 		LOG.info(LogConstants.SEPARATING_LINE);
 		MyLogWriter.writeLog(LogConstants.COMPLETION_TRANSPORTATION_SYSTEM);
 		
-		if (Controller.isAborted() == false) {
+		if (Controller.isControllerAborted() == false) {
 			controller.validateTransportation();
 			LOG.info(LogConstants.SEPARATING_LINE);
 			MyLogWriter.writeLog(LogConstants.SEPARATING_LINE);

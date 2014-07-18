@@ -34,9 +34,9 @@ public class ProgramConstants {
 	public final static String CONFIG_DEFAULT_PASSENGERS_NUMBER = "10";
 	public final static String CONFIG_DEFAULT_ANIMATION_BOOTS = "1";
 		
-	public final static int DEFAULT_SLEEP_TIME = 200;
+	public final static int DEFAULT_SLEEP_TIME = 100;
 	public final static int SLEEP_TIME_ANIMATION_BOOTS = 500;
-		
+			
 	public final static int INITIAL_STORY = 1;
 	public final static int INITIAL_ORIGINAL_ID_PART = 1;
 		
@@ -44,6 +44,8 @@ public class ProgramConstants {
 	// create list of char for random passengerId
 	public final static int PASSENGER_ID_SIZE = 3;
 	public static ArrayList<String> alphaNumList = new ArrayList<String>();
+	
+	public static int ANIMATION_BOOTS = 10;
 	
 	public static AppButtonListener appButtonListener = new AppButtonListener();
 			
